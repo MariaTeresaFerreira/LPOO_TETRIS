@@ -72,8 +72,8 @@ public class Coords {
     }
 
     public int compareTo(Coords c){
-        /*int dx = abs(this.X() - c.X());
-        int dy = abs(this.Y() - c.Y());
+        int dx = Math.abs(this.X() - c.X());
+        int dy = Math.abs(this.Y() - c.Y());
         if (dx < dy){
             if (this.Y() < c.Y()) return -1;
             return 1;
@@ -81,7 +81,7 @@ public class Coords {
         else{
             if (this.X() < c.X()) return -1;
             return 1;
-        }*/
-        return 0;
+        }
+        
     }
 }
