@@ -82,6 +82,5 @@ public class Coords {
             if (this.X() < c.X()) return -1;
             return 1;
         }
-        
     }
 }
