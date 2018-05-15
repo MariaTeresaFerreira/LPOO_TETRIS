@@ -1,9 +1,5 @@
 package com.mygdx.weed;
 
-/**
- * Created by pppereira3 on 12-05-2018.
- */
-
 public class TetroS extends Tetromino {
 
     public TetroS(char power){
@@ -20,15 +16,36 @@ public class TetroS extends Tetromino {
     }
 
     public void rotate(){
+
+        Coords ac = this.blocks.get("A").getCoords();
+        Coords bc = this.blocks.get("A").getCoords();
+        Coords cc = this.blocks.get("A").getCoords();
+        Coords dc = this.blocks.get("A").getCoords();
+
         switch (this.dir) {
             case 0:
-                
+                this.blocks.get("A").getCoords().setCoords(ac.X() + 1, ac.Y() - 1);
+                this.blocks.get("B").getCoords().setCoords(bc.X(), bc.Y());
+                this.blocks.get("C").getCoords().setCoords(cc.X() + 1, cc.Y() + 1);
+                this.blocks.get("D").getCoords().setCoords(dc.X(), dc.Y() + 2);
                 break;
             case 1:
+                this.blocks.get("A").getCoords().setCoords(ac.X() + 1, ac.Y() + 1);
+                this.blocks.get("B").getCoords().setCoords(bc.X(), bc.Y());
+                this.blocks.get("C").getCoords().setCoords(cc.X() - 1, cc.Y() + 1);
+                this.blocks.get("D").getCoords().setCoords(dc.X() - 2, dc.Y());
                 break;
             case 2:
+                this.blocks.get("A").getCoords().setCoords(ac.X() - 1, ac.Y() + 1);
+                this.blocks.get("B").getCoords().setCoords(bc.X(), bc.Y());
+                this.blocks.get("C").getCoords().setCoords(cc.X() - 1, cc.Y() - 1);
+                this.blocks.get("D").getCoords().setCoords(dc.X(), dc.Y() - 2);
                 break;
             case 3:
+                this.blocks.get("A").getCoords().setCoords(ac.X() - 1, ac.Y() - 1);
+                this.blocks.get("B").getCoords().setCoords(bc.X(), bc.Y());
+                this.blocks.get("C").getCoords().setCoords(cc.X() + 1, cc.Y() - 1);
+                this.blocks.get("D").getCoords().setCoords(dc.X() + 2, dc.Y());
                 break;
             default:
                 break;
