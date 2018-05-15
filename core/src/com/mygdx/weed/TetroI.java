@@ -15,17 +15,46 @@ public class TetroI extends Tetromino {
     }
 
     public void rotate(){
-/*
+        Coords ac = this.blocks.get("A").getCoords();
+        Coords bc = this.blocks.get("B").getCoords();
+        Coords cc = this.blocks.get("C").getCoords();
+        Coords dc = this.blocks.get("D").getCoords();
         switch (this.dir){
             case 0:
+                this.blocks.get("A").getCoords().setCoords(ac.X() + 2, ac.Y() - 1);
+                this.blocks.get("B").getCoords().setCoords(bc.X() + 1, bc.Y() + 0);
+                this.blocks.get("C").getCoords().setCoords(cc.X() + 0, cc.Y() - 1);
+                this.blocks.get("D").getCoords().setCoords(dc.X() - 1, dc.Y() + 2);
+                this.dir = 1;
+                break;
 
-        }*/
+            case 1:
+                this.blocks.get("A").getCoords().setCoords(ac.X() + 1, ac.Y() + 2);
+                this.blocks.get("B").getCoords().setCoords(bc.X() + 0, bc.Y() + 1);
+                this.blocks.get("C").getCoords().setCoords(cc.X() - 1, cc.Y() + 0);
+                this.blocks.get("D").getCoords().setCoords(dc.X() - 2, dc.Y() - 1);
+                this.dir = 2;
+                break;
+
+            case 2:
+                this.blocks.get("A").getCoords().setCoords(ac.X() - 2, ac.Y() + 1);
+                this.blocks.get("B").getCoords().setCoords(bc.X() - 1, bc.Y() + 0);
+                this.blocks.get("C").getCoords().setCoords(cc.X() - 0, cc.Y() - 1);
+                this.blocks.get("D").getCoords().setCoords(dc.X() + 1, dc.Y() - 2);
+                this.dir = 3;
+                break;
+
+            case 3:
+                this.blocks.get("A").getCoords().setCoords(ac.X() - 1, ac.Y() + 2);
+                this.blocks.get("B").getCoords().setCoords(bc.X() - 0, bc.Y() - 1);
+                this.blocks.get("C").getCoords().setCoords(cc.X() + 1, cc.Y() - 0);
+                this.blocks.get("D").getCoords().setCoords(dc.X() + 2, dc.Y() - 1);
+                this.dir = 0;
+                break;
+
+            default:
+                break;
+        }
     }
 
-    /*
-    public static void main (String [] arg){
-        Tetromino t = new TetroI('I');
-        System.out.println(t);
-    }
-    */
 }

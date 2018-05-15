@@ -71,6 +71,17 @@ public abstract class Tetromino {
         return s;
     }
 
+    public void drop(){
+        Coords ac = this.blocks.get("A").getCoords();
+        Coords bc = this.blocks.get("B").getCoords();
+        Coords cc = this.blocks.get("C").getCoords();
+        Coords dc = this.blocks.get("D").getCoords();
+        this.blocks.get("A").getCoords().setCoords(ac.X() + 0, ac.Y() + 1);
+        this.blocks.get("B").getCoords().setCoords(bc.X() + 0, bc.Y() + 1);
+        this.blocks.get("C").getCoords().setCoords(cc.X() + 0, cc.Y() + 1);
+        this.blocks.get("D").getCoords().setCoords(dc.X() + 0, dc.Y() + 1);
+    }
+
     public abstract void rotate();
 /*
     public static void main (String [] arg){
