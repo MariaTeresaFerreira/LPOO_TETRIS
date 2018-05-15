@@ -12,10 +12,10 @@ public class TetroS extends Tetromino {
         Block b = new Block(new Coords (1, 0), 'G', 'N');
         Block c = new Block(new Coords (1, 1), 'G', power);
         Block d = new Block(new Coords (2, 1), 'G', 'N');
-        this.blocks.add(a);
-        this.blocks.add(b);
-        this.blocks.add(c);
-        this.blocks.add(d);
+        this.blocks.put("A", a);
+        this.blocks.put("B", b);
+        this.blocks.put("C", c);
+        this.blocks.put("D", d);
     }
 
     public void rotate(){}

@@ -8,10 +8,10 @@ public class TetroO extends Tetromino {
         Block b = new Block(new Coords (1, 0), 'Y', 'N');
         Block c = new Block(new Coords (0, 1), 'Y', power);
         Block d = new Block(new Coords (1, 1), 'Y', 'N');
-        this.blocks.add(a);
-        this.blocks.add(b);
-        this.blocks.add(c);
-        this.blocks.add(d);
+        this.blocks.put("A", a);
+        this.blocks.put("B", b);
+        this.blocks.put("C", c);
+        this.blocks.put("D", d);
     }
 
     public void rotate(){}

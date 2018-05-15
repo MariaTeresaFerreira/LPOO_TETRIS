@@ -1,6 +1,6 @@
 package com.mygdx.weed;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 
 class Block{
     private Coords coords;
@@ -51,7 +51,7 @@ class Block{
 
 public abstract class Tetromino {
 
-    protected LinkedList<Block> blocks = new LinkedList<Block>();
+    protected HashMap<String ,Block> blocks = new HashMap<String, Block>();
     protected char shape;
     protected Integer dir;
 
