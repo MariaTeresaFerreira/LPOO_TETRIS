@@ -1,9 +1,5 @@
 package com.mygdx.weed;
 
-/**
- * Created by pppereira3 on 03-05-2018.
- */
-
 public class TetroI extends Tetromino {
 
     public TetroI(char power){
@@ -17,12 +13,13 @@ public class TetroI extends Tetromino {
         this.blocks.add(c);
         this.blocks.add(d);
     }
+
+    public void rotate(){}
+
     /*
     public static void main (String [] arg){
         Tetromino t = new TetroI('I');
         System.out.println(t);
     }
-    * */
-
-    /*ROTATE*/
+    */
 }
