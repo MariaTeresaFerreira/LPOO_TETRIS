@@ -40,6 +40,17 @@ public class GameState {
         }
     }
 
+    public void drop(){
+        Coords ac = curr.getBlocks().get("A").getCoords();
+        Coords bc = curr.getBlocks().get("B").getCoords();
+        Coords cc = curr.getBlocks().get("C").getCoords();
+        Coords dc = curr.getBlocks().get("D").getCoords();
+        curr.getBlocks().get("A").getCoords().setCoords(ac.X() + 0, ac.Y() + 1);
+        curr.getBlocks().get("B").getCoords().setCoords(bc.X() + 0, bc.Y() + 1);
+        curr.getBlocks().get("C").getCoords().setCoords(cc.X() + 0, cc.Y() + 1);
+        curr.getBlocks().get("D").getCoords().setCoords(dc.X() + 0, dc.Y() + 1);
+    }
+
 
     public GameState(char mode){
         this.mode = mode;
