@@ -15,7 +15,9 @@ public class MainMenuScreen implements Screen{
     Texture exitButton;
 
     public MainMenuScreen(){
+
         batch = new SpriteBatch();
+        
     }
 
     @Override
