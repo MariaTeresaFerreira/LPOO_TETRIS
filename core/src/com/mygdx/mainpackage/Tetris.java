@@ -14,14 +14,12 @@ public class Tetris extends Game {
 	* */
 	@Override
 	public void create () {
-		//this.create();
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 	}
 
 	@Override
 	public void render () {
-		//this.render();
 		Gdx.gl.glClearColor(255, 255, 255, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
