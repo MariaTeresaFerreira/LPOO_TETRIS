@@ -1,4 +1,4 @@
-package com.mygdx.weed;
+package com.mygdx.mainpackage;
 
 import android.os.Bundle;
 

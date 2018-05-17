@@ -1,4 +1,4 @@
-package com.mygdx.weed;
+package com.mygdx.mainpackage;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -15,7 +15,7 @@ public class Tetris extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("dick.jpg");
+		img = new Texture("badlogic.jpg");
 	}
 
 	@Override
