@@ -29,7 +29,6 @@ public class MainMenuScreen implements Screen{
 
     private Viewport vp;
     private Stage stage;
-    private static final Group mainGroup = new Group();
 
     public static final float SCREEN_WIDTH = 1600;
     public static final float SCREEN_HEIGHT = 900;
@@ -61,10 +60,7 @@ public class MainMenuScreen implements Screen{
         exitButton.setY(Gdx.graphics.getHeight()/2 - exitButton.getHeight()/2 - exitButton.getHeight() * (float) 1.5);
 
         vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-        mainGroup.setWidth(SCREEN_WIDTH);
-        mainGroup.setHeight(SCREEN_HEIGHT);
-
+        
         stage = new Stage(vp, t.batch);
         stage.addActor(startButton);
         stage.addActor(highScoresButton);
