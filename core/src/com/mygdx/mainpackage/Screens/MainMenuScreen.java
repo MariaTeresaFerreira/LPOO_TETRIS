@@ -3,10 +3,15 @@ package com.mygdx.mainpackage.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mainpackage.Tetris;
 
 public class MainMenuScreen implements Screen{
@@ -22,13 +27,18 @@ public class MainMenuScreen implements Screen{
     private Button startButton;
     private Button highScoresButton;
 
-    public static final float BUTTON_WIDTH = 150;
-    public static final float BUTTON_HEIGHT = 75;
+    private Viewport vp;
+    private Stage stage;
+    private static final Group mainGroup = new Group();
+
+    public static final float SCREEN_WIDTH = 1600;
+    public static final float SCREEN_HEIGHT = 900;
 
     public MainMenuScreen(Tetris t){
 
         this.t = t;
         background = new Texture("wallpaper.jpg");
+        //TODO: Mute. A Teresa vai se esquecer...
         muteSprite = new Sprite (new Texture("sound.png"));
 
 
@@ -50,8 +60,15 @@ public class MainMenuScreen implements Screen{
         exitButton.setX(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2);
         exitButton.setY(Gdx.graphics.getHeight()/2 - exitButton.getHeight()/2 - exitButton.getHeight() * (float) 1.5);
 
+        vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        exitSprite.setSize( (float) (Gdx.graphics.getWidth()*0.09375),  (float) (Gdx.graphics.getHeight()*0.0834));
+        mainGroup.setWidth(SCREEN_WIDTH);
+        mainGroup.setHeight(SCREEN_HEIGHT);
+
+        stage = new Stage(vp, t.batch);
+        stage.addActor(startButton);
+        stage.addActor(highScoresButton);
+        stage.addActor(exitButton);
 
     }
 
@@ -65,16 +82,11 @@ public class MainMenuScreen implements Screen{
 
         t.batch.begin();
         t.batch.draw(background, 0, 0);
-        //background.draw(this.t.batch, );
         t.batch.draw(muteSprite, 1500, 800);
-        startButton.draw(t.batch, 1);
-        highScoresButton.draw(t.batch, 1);
-        exitButton.draw(t.batch, 1);
-        //t.batch.draw(highScoresSprite, 700, 350, BUTTON_WIDTH, BUTTON_HEIGHT);
-        //t.batch.draw(exitSprite, 700, 250, BUTTON_WIDTH, BUTTON_HEIGHT);
         t.batch.end();
-
+        stage.draw();
     }
+
 
     @Override
     public void show() {
@@ -98,6 +110,6 @@ public class MainMenuScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 }
