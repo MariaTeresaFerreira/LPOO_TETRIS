@@ -16,7 +16,6 @@ public class Tetris extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		this.setScreen(new MainMenuScreen(this));
-		//img = new Texture("badlogic.jpg");
 
 	}
 

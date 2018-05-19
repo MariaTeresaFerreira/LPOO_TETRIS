@@ -3,13 +3,12 @@ package com.mygdx.mainpackage.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mainpackage.Tetris;
@@ -59,8 +58,8 @@ public class MainMenuScreen implements Screen{
         exitButton.setX(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2);
         exitButton.setY(Gdx.graphics.getHeight()/2 - exitButton.getHeight()/2 - exitButton.getHeight() * (float) 1.5);
 
-        vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
-        
+        vp = new FillViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
+
         stage = new Stage(vp, t.batch);
         stage.addActor(startButton);
         stage.addActor(highScoresButton);
@@ -81,6 +80,7 @@ public class MainMenuScreen implements Screen{
         t.batch.draw(muteSprite, 1500, 800);
         t.batch.end();
         stage.draw();
+
     }
 
 
