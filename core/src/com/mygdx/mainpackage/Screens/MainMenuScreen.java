@@ -58,12 +58,14 @@ public class MainMenuScreen implements Screen{
         exitButton.setX(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2);
         exitButton.setY(Gdx.graphics.getHeight()/2 - exitButton.getHeight()/2 - exitButton.getHeight() * (float) 1.5);
 
-        vp = new FillViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
+        vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         stage = new Stage(vp, t.batch);
         stage.addActor(startButton);
         stage.addActor(highScoresButton);
         stage.addActor(exitButton);
+
+        Gdx.input.setInputProcessor(stage); //Para podermos dar inputs ao stage :P
 
     }
 
@@ -80,6 +82,12 @@ public class MainMenuScreen implements Screen{
         t.batch.draw(muteSprite, 1500, 800);
         t.batch.end();
         stage.draw();
+
+        if (exitButton.isPressed()){
+            Gdx.app.exit();
+        }
+        
+        stage.act();
 
     }
 
