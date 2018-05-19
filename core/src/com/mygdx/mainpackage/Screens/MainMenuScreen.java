@@ -25,6 +25,7 @@ public class MainMenuScreen implements Screen{
     private Button exitButton;
     private Button startButton;
     private Button highScoresButton;
+    private Button muteButton;
 
     private Viewport vp;
     private Stage stage;
@@ -38,7 +39,10 @@ public class MainMenuScreen implements Screen{
         background = new Texture("wallpaper.jpg");
         //TODO: Mute. A Teresa vai se esquecer...
         muteSprite = new Sprite (new Texture("sound.png"));
-
+        muteSprite.setSize( Gdx.graphics.getWidth()/20,  Gdx.graphics.getWidth() / 20);
+        muteButton = new Button(new SpriteDrawable(muteSprite));
+        muteButton.setX(Gdx.graphics.getWidth() - (muteButton.getWidth()));
+        muteButton.setY(Gdx.graphics.getHeight() - (muteButton.getWidth()));
 
         startSprite = new Sprite (new Texture("startButton.png"));
         startSprite.setSize( (float) (Gdx.graphics.getWidth()*0.09375),  (float) (Gdx.graphics.getHeight()*0.0834));
@@ -64,6 +68,7 @@ public class MainMenuScreen implements Screen{
         stage.addActor(startButton);
         stage.addActor(highScoresButton);
         stage.addActor(exitButton);
+        stage.addActor(muteButton);
 
         Gdx.input.setInputProcessor(stage); //Para podermos dar inputs ao stage :P
 
@@ -79,7 +84,6 @@ public class MainMenuScreen implements Screen{
 
         t.batch.begin();
         t.batch.draw(background, 0, 0);
-        t.batch.draw(muteSprite, 1500, 800);
         t.batch.end();
         stage.draw();
 
