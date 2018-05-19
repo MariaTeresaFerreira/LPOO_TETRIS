@@ -4,20 +4,28 @@ package com.mygdx.mainpackage.Screens;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.mainpackage.Tetris;
 
 public class MainMenuScreen implements Screen{
 
-    SpriteBatch batch;
+    Tetris t;
     Texture background;
     Texture muteButton;
     Texture startButton;
     Texture highScoresButton;
     Texture exitButton;
+    public static final float BUTTON_WIDTH = 150;
+    public static final float BUTTON_HEIGHT = 75;
 
-    public MainMenuScreen(){
+    public MainMenuScreen(Tetris t){
 
-        batch = new SpriteBatch();
-        
+        this.t = t;
+        background = new Texture("wallpaper.jpg");
+        muteButton = new Texture("sound.png");
+        startButton = new Texture("startButton.png");
+        highScoresButton = new Texture("hsButton.png");
+        exitButton = new Texture("exitButton.png");
+
     }
 
     @Override
@@ -27,6 +35,14 @@ public class MainMenuScreen implements Screen{
 
     @Override
     public void render(float delta) {
+
+        t.batch.begin();
+        t.batch.draw(background, 0, 0);
+        t.batch.draw(muteButton, 1500, 800);
+        t.batch.draw(startButton, 700, 450, BUTTON_WIDTH, BUTTON_HEIGHT);
+        t.batch.draw(highScoresButton, 700, 350, BUTTON_WIDTH, BUTTON_HEIGHT);
+        t.batch.draw(exitButton, 700, 250, BUTTON_WIDTH, BUTTON_HEIGHT);
+        t.batch.end();
 
     }
 
