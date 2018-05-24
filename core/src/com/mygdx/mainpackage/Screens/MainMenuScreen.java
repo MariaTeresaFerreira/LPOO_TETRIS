@@ -17,18 +17,18 @@ import com.mygdx.mainpackage.Tetris;
 public class MainMenuScreen implements Screen{
 
     private Tetris t;
-    private Texture background;
+    private Texture background= new Texture("wallpaper.jpg");
     private Sprite muteSprite = new Sprite (new Texture("sound.png"));
-    private Sprite startSprite;
-    private Sprite highScoresSprite;
-    private Sprite exitSprite;
+    private Sprite startSprite = new Sprite (new Texture("startButton.png"));
+    private Sprite highScoresSprite = new Sprite (new Texture("hsButton.png"));
+    private Sprite exitSprite = new Sprite(new Texture("exitButton.png"));
 
     private Button exitButton;
     private Button startButton;
     private Button highScoresButton;
     private Button  muteButton = new Button(new SpriteDrawable(muteSprite));
 
-    private Viewport vp;
+    private Viewport vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
     private Stage stage;
 
     public static final float SCREEN_WIDTH = 1600;
@@ -37,42 +37,30 @@ public class MainMenuScreen implements Screen{
     public MainMenuScreen(final Tetris t){
 
         this.t = t;
-        background = new Texture("wallpaper.jpg");
-        //TODO: Mute. A Teresa vai se esquecer...
         muteButton.setX(Gdx.graphics.getWidth() - muteSprite.getWidth());
         muteButton.setY(Gdx.graphics.getHeight() - muteSprite.getRegionHeight());
         muteButton.addListener(new ClickListener(){
           @Override
             public void clicked(InputEvent event, float x, float y){
-              if (t.sound == true){
-                  muteSprite.set(new Sprite(new Texture("mute.png")));
-                  t.sound = false;
-              }else {
-                  muteSprite.set(new Sprite(new Texture("sound.png")));
-                  t.sound = true;
-              }
+              Mute.click(t, muteSprite);
           }
         });
 
-        startSprite = new Sprite (new Texture("startButton.png"));
-        startSprite.setSize( (float) (Gdx.graphics.getWidth()*0.09375),  (float) (Gdx.graphics.getHeight()*0.0834));
+        startSprite.setSize((float) (Gdx.graphics.getWidth()*0.09375), (float) (Gdx.graphics.getHeight()*0.0834));
+        exitSprite.setSize((float) (Gdx.graphics.getWidth()*0.09375), (float) (Gdx.graphics.getHeight()*0.0834));
+        highScoresSprite.setSize((float) (Gdx.graphics.getWidth()*0.09375), (float) (Gdx.graphics.getHeight()*0.0834));
+
         startButton = new Button(new SpriteDrawable(startSprite));
         startButton.setX(Gdx.graphics.getWidth()/2 - startButton.getWidth()/2);
         startButton.setY(Gdx.graphics.getHeight()/2 - startButton.getHeight()/2 + startButton.getHeight() * (float)1.5);
 
-        highScoresSprite = new Sprite (new Texture("hsButton.png"));
-        highScoresSprite.setSize( (float) (Gdx.graphics.getWidth()*0.09375),  (float) (Gdx.graphics.getHeight()*0.0834));
         highScoresButton = new Button(new SpriteDrawable(highScoresSprite));
         highScoresButton.setX(Gdx.graphics.getWidth()/2 - highScoresButton.getWidth()/2);
         highScoresButton.setY(Gdx.graphics.getHeight()/2 - highScoresButton.getHeight()/2);
 
-        exitSprite = new Sprite(new Texture("exitButton.png"));
-        exitSprite.setSize( (float) (Gdx.graphics.getWidth()*0.09375),  (float) (Gdx.graphics.getHeight()*0.0834));
         exitButton = new Button(new SpriteDrawable(exitSprite));
         exitButton.setX(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2);
         exitButton.setY(Gdx.graphics.getHeight()/2 - exitButton.getHeight()/2 - exitButton.getHeight() * (float) 1.5);
-
-        vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         stage = new Stage(vp, t.batch);
         stage.addActor(startButton);
@@ -80,7 +68,8 @@ public class MainMenuScreen implements Screen{
         stage.addActor(exitButton);
         stage.addActor(muteButton);
 
-        Gdx.input.setInputProcessor(stage); //Para podermos dar inputs ao stage :P
+        Gdx.input.setInputProcessor(stage);
+        //Para podermos dar inputs ao stage :P
 
     }
 
@@ -105,26 +94,7 @@ public class MainMenuScreen implements Screen{
             this.dispose();
             t.setScreen(new HighScoresScreen(t));
         }
-/*
-        if (muteButton.isPressed()){
-            //TODO: DESLIGAR MUSICA (PARA ISSO E PRECISO PRIMEIRO TER MUSICA)
-            //TODO: LIGAR MUSICA (PARA ISSO E PRECISO PRIMEIRO TER MUSICA)
-            if (this.sound == true) {
-                muteSprite.set(new Sprite(new Texture("mute.png")));
-                this.sound = false;
-            }else {
-                muteSprite.set(new Sprite(new Texture("sound.png")));
-                this.sound = true;
-            }
 
-            //TODO: OS BOTOES NAO PODEM SER NO RENDER, SE FOREM O MUTE CORRE FPSX POR SEC
-/*
-            muteButton = new Button(new SpriteDrawable(muteSprite));
-            muteButton.setX(Gdx.graphics.getWidth() - muteSprite.getWidth());
-            muteButton.setY(Gdx.graphics.getHeight() - muteSprite.getRegionHeight());
-            stage.getActors().set(3, muteButton);
-        }*/
-        
         stage.act();
 
     }
