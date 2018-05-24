@@ -7,6 +7,7 @@ import com.mygdx.mainpackage.Screens.MainMenuScreen;
 public class Tetris extends Game {
 
 	public SpriteBatch batch;
+	public boolean sound;
 
 	/*
 	* public static final float SPEED = pixels/segundo que queremos que a imagem ande, assim fica independente da fps
