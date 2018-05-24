@@ -39,7 +39,6 @@ public class MainMenuScreen implements Screen{
 
         this.t = t;
         background = new Texture("wallpaper.jpg");
-        //TODO: Mute. A Teresa vai se esquecer...
         muteButton.setX(Gdx.graphics.getWidth() - muteSprite.getWidth());
         muteButton.setY(Gdx.graphics.getHeight() - muteSprite.getRegionHeight());
         muteButton.addListener(new ClickListener(){
@@ -105,6 +104,10 @@ public class MainMenuScreen implements Screen{
         if (highScoresButton.isPressed()){
             this.dispose();
             t.setScreen(new HighScoresScreen(t));
+        }
+        if(startButton.isPressed()){
+            this.dispose();
+            t.setScreen(new GameSetupScreen(t));
         }
 /*
         if (muteButton.isPressed()){
