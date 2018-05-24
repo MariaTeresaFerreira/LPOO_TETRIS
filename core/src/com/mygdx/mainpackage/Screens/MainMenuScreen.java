@@ -27,7 +27,7 @@ public class MainMenuScreen implements Screen{
     private Button startButton;
     private Button highScoresButton;
     private Button  muteButton = new Button(new SpriteDrawable(muteSprite));
-
+    
     private Viewport vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
     private Stage stage;
 
