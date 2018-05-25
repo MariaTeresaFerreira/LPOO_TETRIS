@@ -94,6 +94,12 @@ public class MainMenuScreen implements Screen{
             this.dispose();
             t.setScreen(new HighScoresScreen(t));
         }
+        if (startButton.isPressed()){
+            this.dispose();
+            t.setScreen(new GameSetupScreen(t));
+        }
+
+    }
 /*
         if (muteButton.isPressed()){
             //TODO: DESLIGAR MUSICA (PARA ISSO E PRECISO PRIMEIRO TER MUSICA)
@@ -108,7 +114,7 @@ public class MainMenuScreen implements Screen{
 
         stage.act();
 
-    }
+    }*/
 
 
     @Override

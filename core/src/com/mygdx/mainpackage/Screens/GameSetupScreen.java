@@ -79,7 +79,7 @@ public class GameSetupScreen implements Screen{
         }
         if(infoButton.isPressed()){
             this.dispose();
-            //t.setScreen(new GameModesInfoScreen(t));
+            t.setScreen(new GameSetupInfoScreen(t));
             //TODO: criar info screen
         }
         if(forwardButton.isPressed()){

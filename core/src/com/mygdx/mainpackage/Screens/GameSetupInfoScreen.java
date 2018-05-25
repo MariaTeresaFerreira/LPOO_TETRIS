@@ -29,7 +29,10 @@ public class GameSetupInfoScreen implements Screen {
         this.t = t;
         background = new Texture("wallpaper.jpg");
         infoTextSprite = new Sprite(new Texture("infoText.png"));
+        infoTextSprite.setSize(1028, 732);
         infoTextButton = new Button(new SpriteDrawable(infoTextSprite));
+        infoTextButton.setX(300);
+        infoTextButton.setY(100);
 
         backSprite = new Sprite(new Texture("back.png"));
         backSprite.setSize(100, 100);
@@ -39,6 +42,7 @@ public class GameSetupInfoScreen implements Screen {
 
         stage = new Stage(vp, t.batch);
         stage.addActor(infoTextButton);
+        stage.addActor(backButton);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -59,7 +63,7 @@ public class GameSetupInfoScreen implements Screen {
 
         if(backButton.isPressed()) {
             this.dispose();
-            t.setScreen(new MainMenuScreen(t));
+            t.setScreen(new GameSetupScreen(t));
             //TODO: SOUND NAO E SMP TRUE
         }
 
