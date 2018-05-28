@@ -33,7 +33,7 @@ public class GameSetupScreen implements Screen{
 
     public GameSetupScreen(Tetris t){
         this.t = t;
-        background = new Texture("wallpaper.jpg");
+        background = new Texture("background2.png");
 
         backSprite = new Sprite(new Texture("back.png"));
         backSprite.setSize(100, 100);

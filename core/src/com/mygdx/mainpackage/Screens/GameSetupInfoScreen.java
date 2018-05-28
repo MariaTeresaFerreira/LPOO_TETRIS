@@ -6,10 +6,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mainpackage.Tetris;
+
+import java.awt.Checkbox;
 
 public class GameSetupInfoScreen implements Screen {
 
@@ -22,17 +25,21 @@ public class GameSetupInfoScreen implements Screen {
     private Viewport vp;
     private Stage stage;
 
+
     public static final float SCREEN_WIDTH = 1600;
     public static final float SCREEN_HEIGHT = 900;
 
     public GameSetupInfoScreen(Tetris t){
         this.t = t;
-        background = new Texture("wallpaper.jpg");
+        //background = new Texture("wallpaper.jpg");
+        background = new Texture("background2.png");
         infoTextSprite = new Sprite(new Texture("infoText.png"));
         infoTextSprite.setSize(1028, 732);
         infoTextButton = new Button(new SpriteDrawable(infoTextSprite));
         infoTextButton.setX(300);
         infoTextButton.setY(100);
+
+
 
         backSprite = new Sprite(new Texture("back.png"));
         backSprite.setSize(100, 100);
@@ -43,6 +50,8 @@ public class GameSetupInfoScreen implements Screen {
         stage = new Stage(vp, t.batch);
         stage.addActor(infoTextButton);
         stage.addActor(backButton);
+
+
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -60,7 +69,6 @@ public class GameSetupInfoScreen implements Screen {
         t.batch.draw(background, 0, 0);
         t.batch.end();
         stage.draw();
-
         if(backButton.isPressed()) {
             this.dispose();
             t.setScreen(new GameSetupScreen(t));

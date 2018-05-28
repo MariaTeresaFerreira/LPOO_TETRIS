@@ -24,7 +24,7 @@ public class HighScoresScreen implements Screen{
 
     public HighScoresScreen(Tetris t){
         this.t = t;
-        background = new Texture("wallpaper.jpg");
+        background = new Texture("background2.png");
         phSprite = new Sprite(new Texture("phHSS.png"));
         phButton = new Button(new SpriteDrawable(phSprite));
 

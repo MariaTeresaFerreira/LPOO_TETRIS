@@ -17,7 +17,7 @@ import com.mygdx.mainpackage.Tetris;
 public class MainMenuScreen implements Screen{
 
     private Tetris t;
-    private Texture background= new Texture("wallpaper.jpg");
+    private Texture background= new Texture("background2.png");
     private Sprite muteSprite = new Sprite (new Texture("sound.png"));
     private Sprite startSprite = new Sprite (new Texture("startButton.png"));
     private Sprite highScoresSprite = new Sprite (new Texture("hsButton.png"));
