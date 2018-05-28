@@ -1,37 +1,57 @@
 package com.mygdx.mainpackage.Screens;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mainpackage.Tetris;
 
-public class HighScoresScreen implements Screen{
+import java.awt.Checkbox;
+
+public class GameSetupInfoScreen implements Screen {
 
     private Tetris t;
     private Texture background;
-    private Sprite phSprite;
-    private Button phButton;
+    private Sprite infoTextSprite;
+    private Button infoTextButton;
+    private Sprite backSprite;
+    private Button backButton;
     private Viewport vp;
     private Stage stage;
+
 
     public static final float SCREEN_WIDTH = 1600;
     public static final float SCREEN_HEIGHT = 900;
 
-    public HighScoresScreen(Tetris t){
+    public GameSetupInfoScreen(Tetris t){
         this.t = t;
+        //background = new Texture("wallpaper.jpg");
         background = new Texture("background2.png");
-        phSprite = new Sprite(new Texture("phHSS.png"));
-        phButton = new Button(new SpriteDrawable(phSprite));
+        infoTextSprite = new Sprite(new Texture("infoText.png"));
+        infoTextSprite.setSize(1028, 732);
+        infoTextButton = new Button(new SpriteDrawable(infoTextSprite));
+        infoTextButton.setX(300);
+        infoTextButton.setY(100);
+
+
+
+        backSprite = new Sprite(new Texture("back.png"));
+        backSprite.setSize(100, 100);
+        backButton = new Button(new SpriteDrawable(backSprite));
 
         vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         stage = new Stage(vp, t.batch);
-        stage.addActor(phButton);
+        stage.addActor(infoTextButton);
+        stage.addActor(backButton);
+
+
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -49,10 +69,9 @@ public class HighScoresScreen implements Screen{
         t.batch.draw(background, 0, 0);
         t.batch.end();
         stage.draw();
-
-        if(phButton.isPressed()) {
+        if(backButton.isPressed()) {
             this.dispose();
-            t.setScreen(new MainMenuScreen(t));
+            t.setScreen(new GameSetupScreen(t));
             //TODO: SOUND NAO E SMP TRUE
         }
 
@@ -87,4 +106,3 @@ public class HighScoresScreen implements Screen{
         stage.getViewport().update(width, height);
     }
 }
-

@@ -17,7 +17,7 @@ import com.mygdx.mainpackage.Tetris;
 public class MainMenuScreen implements Screen{
 
     private Tetris t;
-    private Texture background= new Texture("wallpaper.jpg");
+    private Texture background= new Texture("background2.png");
     private Sprite muteSprite = new Sprite (new Texture("sound.png"));
     private Sprite startSprite = new Sprite (new Texture("startButton.png"));
     private Sprite highScoresSprite = new Sprite (new Texture("hsButton.png"));
@@ -94,10 +94,27 @@ public class MainMenuScreen implements Screen{
             this.dispose();
             t.setScreen(new HighScoresScreen(t));
         }
+        if (startButton.isPressed()){
+            this.dispose();
+            t.setScreen(new GameSetupScreen(t));
+        }
+
+    }
+/*
+        if (muteButton.isPressed()){
+            //TODO: DESLIGAR MUSICA (PARA ISSO E PRECISO PRIMEIRO TER MUSICA)
+            //TODO: LIGAR MUSICA (PARA ISSO E PRECISO PRIMEIRO TER MUSICA)
+            if (this.sound == true) {
+                muteSprite.set(new Sprite(new Texture("mute.png")));
+                this.sound = false;
+            }else {
+                muteSprite.set(new Sprite(new Texture("sound.png")));
+                this.sound = true;
+            }
 
         stage.act();
 
-    }
+    }*/
 
 
     @Override

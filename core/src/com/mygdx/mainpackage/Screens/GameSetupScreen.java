@@ -1,4 +1,5 @@
 package com.mygdx.mainpackage.Screens;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,28 +11,50 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.mainpackage.Tetris;
 
-public class HighScoresScreen implements Screen{
+public class GameSetupScreen implements Screen{
 
     private Tetris t;
     private Texture background;
-    private Sprite phSprite;
-    private Button phButton;
+
     private Viewport vp;
     private Stage stage;
+
+    private Sprite backSprite;
+    private Button backButton;
+
+    private Sprite infoSprite;
+    private Button infoButton;
+
+    private Sprite forwardSprite;
+    private Button forwardButton;
 
     public static final float SCREEN_WIDTH = 1600;
     public static final float SCREEN_HEIGHT = 900;
 
-    public HighScoresScreen(Tetris t){
+    public GameSetupScreen(Tetris t){
         this.t = t;
         background = new Texture("background2.png");
-        phSprite = new Sprite(new Texture("phHSS.png"));
-        phButton = new Button(new SpriteDrawable(phSprite));
+
+        backSprite = new Sprite(new Texture("back.png"));
+        backSprite.setSize(100, 100);
+        backButton = new Button(new SpriteDrawable(backSprite));
+
+        infoSprite = new Sprite(new Texture("info.png"));
+        infoSprite.setSize(100, 100);
+        infoButton = new Button(new SpriteDrawable(infoSprite));
+        infoButton.setX(100);
+
+        forwardSprite = new Sprite(new Texture("forward.png"));
+        forwardSprite.setSize(100, 100);
+        forwardButton = new Button(new SpriteDrawable(forwardSprite));
+        forwardButton.setX(SCREEN_WIDTH - 110);
 
         vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         stage = new Stage(vp, t.batch);
-        stage.addActor(phButton);
+        stage.addActor(backButton);
+        stage.addActor(infoButton);
+        stage.addActor(forwardButton);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -39,7 +62,6 @@ public class HighScoresScreen implements Screen{
 
     @Override
     public void dispose() {
-
     }
 
     @Override
@@ -50,10 +72,20 @@ public class HighScoresScreen implements Screen{
         t.batch.end();
         stage.draw();
 
-        if(phButton.isPressed()) {
+        if(backButton.isPressed()) {
             this.dispose();
             t.setScreen(new MainMenuScreen(t));
             //TODO: SOUND NAO E SMP TRUE
+        }
+        if(infoButton.isPressed()){
+            this.dispose();
+            t.setScreen(new GameSetupInfoScreen(t));
+            //TODO: criar info screen
+        }
+        if(forwardButton.isPressed()){
+            this.dispose();
+            //t.setScreen(new MainGameScreen(t));
+            //TODO: pedro ta a fazer
         }
 
         stage.act();
@@ -87,4 +119,3 @@ public class HighScoresScreen implements Screen{
         stage.getViewport().update(width, height);
     }
 }
-
