@@ -2,6 +2,7 @@ package com.mygdx.mainpackage;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.mainpackage.Screens.MainGameScreen;
 import com.mygdx.mainpackage.Screens.MainMenuScreen;
 
 public class Tetris extends Game {
@@ -16,7 +17,7 @@ public class Tetris extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		this.setScreen(new MainMenuScreen(this));
+		this.setScreen(new MainGameScreen(this));
 
 	}
 
