@@ -42,7 +42,7 @@ public class MainMenuScreen implements Screen{
         muteButton.addListener(new ClickListener(){
           @Override
             public void clicked(InputEvent event, float x, float y){
-              Mute.click(t, muteSprite);
+              SwapImageClick.mute(t, muteSprite);
           }
         });
 
