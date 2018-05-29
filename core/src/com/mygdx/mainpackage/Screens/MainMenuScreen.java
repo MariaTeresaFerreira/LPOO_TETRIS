@@ -34,6 +34,8 @@ public class MainMenuScreen implements Screen{
     public static final float SCREEN_WIDTH = 1600;
     public static final float SCREEN_HEIGHT = 900;
 
+
+
     public MainMenuScreen(final Tetris t){
 
         this.t = t;
@@ -67,6 +69,16 @@ public class MainMenuScreen implements Screen{
         stage.addActor(highScoresButton);
         stage.addActor(exitButton);
         stage.addActor(muteButton);
+
+        t.classic = false;
+        t.krayZBlox = false;
+        t.escapeTheMatrix = false;
+        t.sprint = false;
+        t.marathon = false;
+        t.time = false;
+        t.singlePlayer = false;
+        t.createMultiplayer = false;
+        t.joinMultiplayer = false;
 
         Gdx.input.setInputProcessor(stage);
         //Para podermos dar inputs ao stage :P

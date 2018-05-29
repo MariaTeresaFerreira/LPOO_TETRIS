@@ -30,6 +30,7 @@ public class Tetris extends Game {
 		this.setScreen(new MainMenuScreen(this));
 
 		sound = true;
+
 		classic = false;
 		krayZBlox = false;
 		escapeTheMatrix = false;

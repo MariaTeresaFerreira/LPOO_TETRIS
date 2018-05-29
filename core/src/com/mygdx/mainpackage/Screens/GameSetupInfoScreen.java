@@ -52,6 +52,16 @@ public class GameSetupInfoScreen implements Screen {
         stage = new Stage(vp, t.batch);
         stage.addActor(backButton);
 
+        t.classic = false;
+        t.krayZBlox = false;
+        t.escapeTheMatrix = false;
+        t.sprint = false;
+        t.marathon = false;
+        t.time = false;
+        t.singlePlayer = false;
+        t.createMultiplayer = false;
+        t.joinMultiplayer = false;
+
 
 
         Gdx.input.setInputProcessor(stage);

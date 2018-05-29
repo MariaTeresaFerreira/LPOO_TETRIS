@@ -131,8 +131,6 @@ public class GameSetupScreen implements Screen{
         joinMultiplayerButton.setX(1010);
 
 
-
-
         vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         stage = new Stage(vp, t.batch);
@@ -206,6 +204,12 @@ public class GameSetupScreen implements Screen{
             }
         });
 
+        forwardButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                SwapImageClick.validGame(t, escapeTheMatrixSprite);
+            }
+        });
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -232,14 +236,7 @@ public class GameSetupScreen implements Screen{
         if(infoButton.isPressed()){
             this.dispose();
             t.setScreen(new GameSetupInfoScreen(t));
-            //TODO: criar info screen
         }
-        if(forwardButton.isPressed()) {
-            this.dispose();
-            //t.setScreen(new MainGameScreen(t));
-            //TODO: pedro ta a fazer
-        }
-
         stage.act();
 
     }
