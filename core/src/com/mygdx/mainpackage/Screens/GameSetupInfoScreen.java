@@ -18,10 +18,14 @@ public class GameSetupInfoScreen implements Screen {
 
     private Tetris t;
     private Texture background;
+
     private Sprite infoTextSprite;
-    private Button infoTextButton;
+    //private Button infoTextButton;
     private Sprite backSprite;
     private Button backButton;
+
+
+
     private Viewport vp;
     private Stage stage;
 
@@ -31,13 +35,11 @@ public class GameSetupInfoScreen implements Screen {
 
     public GameSetupInfoScreen(Tetris t){
         this.t = t;
-        //background = new Texture("wallpaper.jpg");
         background = new Texture("background2.png");
         infoTextSprite = new Sprite(new Texture("infoText.png"));
         infoTextSprite.setSize(1028, 732);
-        infoTextButton = new Button(new SpriteDrawable(infoTextSprite));
-        infoTextButton.setX(300);
-        infoTextButton.setY(100);
+        infoTextSprite.setX(300);
+        infoTextSprite.setY(100);
 
 
 
@@ -48,8 +50,17 @@ public class GameSetupInfoScreen implements Screen {
         vp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         stage = new Stage(vp, t.batch);
-        stage.addActor(infoTextButton);
         stage.addActor(backButton);
+
+        t.classic = false;
+        t.krayZBlox = false;
+        t.escapeTheMatrix = false;
+        t.sprint = false;
+        t.marathon = false;
+        t.time = false;
+        t.singlePlayer = false;
+        t.createMultiplayer = false;
+        t.joinMultiplayer = false;
 
 
 
@@ -67,6 +78,7 @@ public class GameSetupInfoScreen implements Screen {
 
         t.batch.begin();
         t.batch.draw(background, 0, 0);
+        infoTextSprite.draw(t.batch);
         t.batch.end();
         stage.draw();
         if(backButton.isPressed()) {
