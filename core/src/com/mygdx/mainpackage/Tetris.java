@@ -9,6 +9,7 @@ public class Tetris extends Game {
 
 	public SpriteBatch batch;
 	public boolean sound;
+	public GameState g;
 
 	/*
 	* public static final float SPEED = pixels/segundo que queremos que a imagem ande, assim fica independente da fps
@@ -17,8 +18,8 @@ public class Tetris extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		g = new GameState('N');
 		this.setScreen(new MainGameScreen(this));
-
 	}
 
 	@Override

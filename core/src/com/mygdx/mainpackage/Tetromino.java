@@ -2,53 +2,6 @@ package com.mygdx.mainpackage;
 
 import java.util.HashMap;
 
-class Block{
-    private Coords coords;
-    private char colour;
-    private char power;
-
-    public Block(){
-        this.coords = new Coords(0 ,0);
-        this.colour = ' ';
-        this.power = ' ';
-    }
-
-    public Block(Coords c, char colour, char pow) {
-        this.coords = c;
-        this.colour = colour;
-        this.power = pow;
-    }
-
-    public Coords getCoords(){
-        return this.coords;
-    }
-
-    public void setCoords(Coords c){
-        this.coords.setCoords(c);
-    }
-
-    public char getColour(){
-        return  this.colour;
-    }
-
-    public char getPower(){
-        return this.power;
-    }
-
-    public int compareTo(Block b){
-        return this.coords.compareTo(b.getCoords());
-    }
-
-    public String toString(){
-        String s = "";
-        s += this.colour + "\n";
-        s += "(" + this.getCoords().X() + ", " + this.getCoords().Y() + ")\n";
-        s += this.power;
-        return s;
-    }
-
-}
-
 public abstract class Tetromino {
 
     protected HashMap<String ,Block> blocks = new HashMap<String, Block>();
@@ -64,15 +17,20 @@ public abstract class Tetromino {
     public String toString(){
         String s = "";
         s += this.shape + "\n";
-        for (int i = 0; i < this.blocks.size(); i++){
-            s += this.blocks.get(i).toString() + "\n";
-        }
+        s += this.blocks.get("A").toString() + "\n";
+        s += this.blocks.get("B").toString() + "\n";
+        s += this.blocks.get("C").toString() + "\n";
+        s += this.blocks.get("D").toString() + "\n";
         s += this.dir;
         return s;
     }
 
     public HashMap<String, Block> getBlocks(){
         return blocks;
+    }
+
+    public String getShape(){
+        return String.valueOf(shape);
     }
 
     public abstract void rotate();

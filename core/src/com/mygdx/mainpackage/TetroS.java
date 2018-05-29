@@ -4,10 +4,10 @@ public class TetroS extends Tetromino {
 
     public TetroS(char power){
         super('S');
-        Block a = new Block(new Coords (0, 0), 'G', 'N');
-        Block b = new Block(new Coords (1, 0), 'G', 'N');
-        Block c = new Block(new Coords (1, 1), 'G', power);
-        Block d = new Block(new Coords (2, 1), 'G', 'N');
+        Block a = new Block(new Coords (0, 0), 'S', 'N');
+        Block b = new Block(new Coords (1, 0), 'S', 'N');
+        Block c = new Block(new Coords (1, 1), 'S', power);
+        Block d = new Block(new Coords (2, 1), 'S', 'N');
         this.blocks.put("A", a);
         this.blocks.put("B", b);
         this.blocks.put("C", c);

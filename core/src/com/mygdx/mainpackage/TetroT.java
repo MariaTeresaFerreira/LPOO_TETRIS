@@ -4,10 +4,10 @@ public class TetroT extends Tetromino {
 
     public TetroT(char power){
         super('T');
-        Block a = new Block(new Coords (1, 0), 'P', 'N');
-        Block b = new Block(new Coords (0, 1), 'P', 'N');
-        Block c = new Block(new Coords (1, 1), 'P', power);
-        Block d = new Block(new Coords (2, 1), 'P', 'N');
+        Block a = new Block(new Coords (1, 0), 'T', 'N');
+        Block b = new Block(new Coords (0, 1), 'T', 'N');
+        Block c = new Block(new Coords (1, 1), 'T', power);
+        Block d = new Block(new Coords (2, 1), 'T', 'N');
         this.blocks.put("A", a);
         this.blocks.put("B", b);
         this.blocks.put("C", c);

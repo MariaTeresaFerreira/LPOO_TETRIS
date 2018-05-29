@@ -5,8 +5,8 @@ package com.mygdx.mainpackage;
  */
 public class Coords {
 
-    private int x;
-    private int y;
+    private float x;
+    private float y;
 
     /*
      * Constructs the object
@@ -14,7 +14,7 @@ public class Coords {
      * @param      x     X coordinate
      * @param      y     Y coordinate
      */
-    public Coords(int x, int y) {
+    public Coords(float x, float y) {
         this.x = x;
         this.y = y;
     }
@@ -36,7 +36,7 @@ public class Coords {
      *
      * @return     x
      */
-    public int X() {
+    public float X() {
         return this.x;
     }
 
@@ -45,7 +45,7 @@ public class Coords {
      *
      * @return     y
      */
-    public int Y() {
+    public float Y() {
         return this.y;
     }
 
@@ -55,7 +55,7 @@ public class Coords {
      * @param      x     new x
      * @param      y     new y
      */
-    public void setCoords(int x, int y) {
+    public void setCoords(float x, float y) {
         this.x = x;
         this.y = y;
     }
@@ -72,8 +72,8 @@ public class Coords {
     }
 
     public int compareTo(Coords c){
-        int dx = Math.abs(this.X() - c.X());
-        int dy = Math.abs(this.Y() - c.Y());
+        float dx = Math.abs(this.X() - c.X());
+        float dy = Math.abs(this.Y() - c.Y());
         if (dx < dy){
             if (this.Y() < c.Y()) return -1;
             return 1;
