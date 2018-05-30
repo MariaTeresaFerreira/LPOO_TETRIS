@@ -9,9 +9,11 @@ public class SwapImageClick {
         if (t.sound == true){
             t.sound = false;
             s.set(new Sprite(new Texture("mute.png")));
+            t.music.stop();
         }else {
             t.sound = true;
             s.set(new Sprite(new Texture("sound.png")));
+            t.music.play();
         }
     }
 

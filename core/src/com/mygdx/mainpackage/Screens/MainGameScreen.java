@@ -2,28 +2,35 @@ package com.mygdx.mainpackage.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.mainpackage.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import java.awt.TextComponent;
 import java.util.HashMap;
-import java.util.LinkedList;
 
-import javax.xml.soap.Text;
 
 public class MainGameScreen implements Screen{
 
     private Stage stage;
     private Tetris t;
     private Texture background= new Texture("background2.png");
+    private Sprite muteSprite = new Sprite (new Texture("sound.png"));
     private HashMap<String, Sprite> spriteMap = new HashMap<String, Sprite>();
+
     private static final float blockSize = (float) (Gdx.graphics.getHeight() * (0.056));
     private static final float displacementX = 10*blockSize;
     private static final float displacementY = (float) (Gdx.graphics.getHeight() - 3*blockSize);
+
     private float time;
 
-    public MainGameScreen(Tetris t){
+    private Button muteButton = new Button(new SpriteDrawable(muteSprite));
+
+    public MainGameScreen(final Tetris t){
 
         this.t = t;
         Sprite lb = new Sprite(new Texture("lightBlueBlock.png")); //Light Blue (I)
@@ -46,6 +53,21 @@ public class MainGameScreen implements Screen{
         spriteMap.put("L", o);
         spriteMap.put("KRAYZ", k);
         spriteMap.put("W", w);
+
+        stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), t.batch);
+
+        muteButton.setX(Gdx.graphics.getWidth() - muteSprite.getWidth());
+        muteButton.setY(Gdx.graphics.getHeight() - muteSprite.getRegionHeight());
+        muteButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                SwapImageClick.mute(t, muteSprite);
+            }
+        });
+
+        stage.addActor(muteButton);
+        Gdx.input.setInputProcessor(stage);
+
 
     }
 
@@ -166,6 +188,7 @@ public class MainGameScreen implements Screen{
         t.batch.begin();
         t.batch.draw(background, 0, 0);
         t.batch.end();
+        stage.draw();
         drawTetromino(t.g.getCurr());
         drawPlayingField();
         drawPlaced();
