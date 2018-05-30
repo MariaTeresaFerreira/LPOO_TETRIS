@@ -231,7 +231,6 @@ public class SwapImageClick {
         }
 
 
-
         if(valid){
             if(!t.mobile) {
                 t.setScreen(new MGSDesktop(t));
