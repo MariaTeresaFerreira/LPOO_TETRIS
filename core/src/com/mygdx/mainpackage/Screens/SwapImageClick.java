@@ -221,25 +221,21 @@ public class SwapImageClick {
         //TODO: otimizar para quando se carrega para avançar so com o escape the matrix nao apagar tudo
         if((t.classic || t.krayZBlox) && (t.sprint || t.marathon || t.time) && (t.singlePlayer || t.createMultiplayer || t.joinMultiplayer)){
             valid = true;
-            System.out.println("1");
         }else if(t.escapeTheMatrix){
             if(t.time && t.singlePlayer) {
                 valid = true;
-                System.out.println("2");
             }else {
                 clickBox(t, etmSprite, 2);
-                System.out.println("4");
             }
 
-        }else {
-            System.out.println("3");
         }
 
 
 
         if(valid){
-            //t.setScreen(MainGameScreen(t));
-            System.out.println("jogo iniciado");
+            if(!t.mobile) {
+                t.setScreen(new MGSDesktop(t));
+            }
         }
     }
 

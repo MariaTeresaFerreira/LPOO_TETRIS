@@ -112,22 +112,6 @@ public class MainMenuScreen implements Screen{
         }
 
     }
-/*
-        if (muteButton.isPressed()){
-            //TODO: DESLIGAR MUSICA (PARA ISSO E PRECISO PRIMEIRO TER MUSICA)
-            //TODO: LIGAR MUSICA (PARA ISSO E PRECISO PRIMEIRO TER MUSICA)
-            if (this.sound == true) {
-                muteSprite.set(new Sprite(new Texture("mute.png")));
-                this.sound = false;
-            }else {
-                muteSprite.set(new Sprite(new Texture("sound.png")));
-                this.sound = true;
-            }
-
-        stage.act();
-
-    }*/
-
 
     @Override
     public void show() {

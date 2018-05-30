@@ -14,6 +14,7 @@ public class TetroI extends Tetromino {
         this.blocks.put("D", d);
     }
 
+
     public void rotate(){
         Coords ac = this.blocks.get("A").getCoords();
         Coords bc = this.blocks.get("B").getCoords();
@@ -23,7 +24,7 @@ public class TetroI extends Tetromino {
             case 0:
                 this.blocks.get("A").getCoords().setCoords(ac.X() + 2, ac.Y() - 1);
                 this.blocks.get("B").getCoords().setCoords(bc.X() + 1, bc.Y() + 0);
-                this.blocks.get("C").getCoords().setCoords(cc.X() + 0, cc.Y() - 1);
+                this.blocks.get("C").getCoords().setCoords(cc.X() + 0, cc.Y() + 1);
                 this.blocks.get("D").getCoords().setCoords(dc.X() - 1, dc.Y() + 2);
                 this.dir = 1;
                 break;
@@ -45,16 +46,17 @@ public class TetroI extends Tetromino {
                 break;
 
             case 3:
-                this.blocks.get("A").getCoords().setCoords(ac.X() - 1, ac.Y() + 2);
+                this.blocks.get("A").getCoords().setCoords(ac.X() - 1, ac.Y() - 2);
                 this.blocks.get("B").getCoords().setCoords(bc.X() - 0, bc.Y() - 1);
                 this.blocks.get("C").getCoords().setCoords(cc.X() + 1, cc.Y() - 0);
-                this.blocks.get("D").getCoords().setCoords(dc.X() + 2, dc.Y() - 1);
+                this.blocks.get("D").getCoords().setCoords(dc.X() + 2, dc.Y() + 1);
                 this.dir = 0;
                 break;
 
             default:
                 break;
         }
+
     }
 
 }

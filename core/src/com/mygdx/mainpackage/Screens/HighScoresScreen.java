@@ -53,7 +53,6 @@ public class HighScoresScreen implements Screen{
         if(phButton.isPressed()) {
             this.dispose();
             t.setScreen(new MainMenuScreen(t));
-            //TODO: SOUND NAO E SMP TRUE
         }
 
         stage.act();

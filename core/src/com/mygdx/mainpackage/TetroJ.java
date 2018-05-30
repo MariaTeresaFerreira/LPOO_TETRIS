@@ -43,7 +43,7 @@ public class TetroJ extends Tetromino {
 
             case 3:
                 this.blocks.get("A").getCoords().setCoords(ac.X() + 0, ac.Y() - 2);
-                this.blocks.get("B").getCoords().setCoords(bc.X() - 1, bc.Y() + 1);
+                this.blocks.get("B").getCoords().setCoords(bc.X() - 1, bc.Y() - 1);
                 this.blocks.get("D").getCoords().setCoords(dc.X() + 1, dc.Y() + 1);
                 this.dir = 0;
                 break;
@@ -51,5 +51,6 @@ public class TetroJ extends Tetromino {
             default:
                 break;
         }
+
     }
 }

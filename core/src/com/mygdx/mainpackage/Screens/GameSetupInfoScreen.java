@@ -84,7 +84,6 @@ public class GameSetupInfoScreen implements Screen {
         if(backButton.isPressed()) {
             this.dispose();
             t.setScreen(new GameSetupScreen(t));
-            //TODO: SOUND NAO E SMP TRUE
         }
 
         stage.act();

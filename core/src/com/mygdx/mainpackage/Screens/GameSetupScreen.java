@@ -231,7 +231,6 @@ public class GameSetupScreen implements Screen{
         if(backButton.isPressed()) {
             this.dispose();
             t.setScreen(new MainMenuScreen(t));
-            //TODO: SOUND NAO E SMP TRUE
         }
         if(infoButton.isPressed()){
             this.dispose();

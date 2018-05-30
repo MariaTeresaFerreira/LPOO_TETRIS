@@ -16,19 +16,19 @@ import java.util.HashMap;
 
 public class MainGameScreen implements Screen{
 
-    private Stage stage;
-    private Tetris t;
-    private Texture background= new Texture("background2.png");
-    private Sprite muteSprite = new Sprite (new Texture("sound.png"));
-    private HashMap<String, Sprite> spriteMap = new HashMap<String, Sprite>();
+    protected Stage stage;
+    protected Tetris t;
+    protected Texture background= new Texture("background2.png");
+    protected Sprite muteSprite = new Sprite (new Texture("sound.png"));
+    protected HashMap<String, Sprite> spriteMap = new HashMap<String, Sprite>();
 
-    private static final float blockSize = (float) (Gdx.graphics.getHeight() * (0.056));
-    private static final float displacementX = 10*blockSize;
-    private static final float displacementY = (float) (Gdx.graphics.getHeight() - 3*blockSize);
+    protected static final float blockSize = (float) (Gdx.graphics.getHeight() * (0.056));
+    protected static final float displacementX = 10*blockSize;
+    protected static final float displacementY = (float) (Gdx.graphics.getHeight() - 3*blockSize);
 
-    private float time;
+    protected float time;
 
-    private Button muteButton = new Button(new SpriteDrawable(muteSprite));
+    protected Button muteButton = new Button(new SpriteDrawable(muteSprite));
 
     public MainGameScreen(final Tetris t){
 

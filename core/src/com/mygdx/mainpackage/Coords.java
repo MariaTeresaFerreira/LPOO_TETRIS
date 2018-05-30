@@ -8,6 +8,11 @@ public class Coords {
     private float x;
     private float y;
 
+    public Coords(){
+        this.x = 0;
+        this.y = 0;
+    }
+
     /*
      * Constructs the object
      *
@@ -82,5 +87,9 @@ public class Coords {
             if (this.X() < c.X()) return -1;
             return 1;
         }
+    }
+
+    public String toString(){
+        return "(" + x + ", " + y + ")";
     }
 }

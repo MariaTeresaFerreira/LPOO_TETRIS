@@ -33,10 +33,14 @@ public abstract class Tetromino {
         return String.valueOf(shape);
     }
 
+    public void printCoords(){
+        System.out.println(this.blocks.get("A").getCoords());
+        System.out.println(this.blocks.get("B").getCoords());
+        System.out.println(this.blocks.get("C").getCoords());
+        System.out.println(this.blocks.get("D").getCoords());
+    }
+
     public abstract void rotate();
-/*
-    public static void main (String [] arg){
-        Tetromino t = new Tetromino('Z');
-        System.out.println(t);
-    }*/
+
+    //TODO: FIX IMPOSSIBLE ROTATES
 }

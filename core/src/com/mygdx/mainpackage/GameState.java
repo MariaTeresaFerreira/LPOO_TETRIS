@@ -12,6 +12,8 @@ public class GameState {
     private LinkedList<Tetromino> next = new LinkedList<Tetromino>();
     private char mode;
 
+    private int maxX = 10;
+
     public Tetromino genTetromino(char power){
         Random randomno = new Random();
         int x = randomno.nextInt(7);
@@ -48,6 +50,17 @@ public class GameState {
         return true;
     }
 
+    public boolean canDrop(){
+        if (canDrop(curr.getBlocks().get("A").getCoords()) &&
+                canDrop(curr.getBlocks().get("B").getCoords()) &&
+                canDrop(curr.getBlocks().get("C").getCoords()) &&
+                canDrop(curr.getBlocks().get("D").getCoords())){
+            return true;
+        }
+
+        return false;
+    }
+
     public void drop(){
         Coords ac = curr.getBlocks().get("A").getCoords();
         Coords bc = curr.getBlocks().get("B").getCoords();
@@ -65,6 +78,100 @@ public class GameState {
             placed.add(curr.getBlocks().get("C"));
             placed.add(curr.getBlocks().get("D"));
             curr = genTetromino('N');
+        }
+    }
+
+    public void hardDrop(){
+
+        while(canDrop()){
+            drop();
+        }
+
+        placed.add(curr.getBlocks().get("A"));
+        placed.add(curr.getBlocks().get("B"));
+        placed.add(curr.getBlocks().get("C"));
+        placed.add(curr.getBlocks().get("D"));
+        curr = genTetromino('N');
+
+    }
+
+    public boolean validSL(){
+        Coords ac = new Coords();
+        Coords bc = new Coords();
+        Coords cc = new Coords();
+        Coords dc = new Coords();
+
+        ac.setCoords(curr.getBlocks().get("A").getCoords().X() -1, curr.getBlocks().get("A").getCoords().Y());
+        bc.setCoords(curr.getBlocks().get("B").getCoords().X() -1, curr.getBlocks().get("B").getCoords().Y());
+        cc.setCoords(curr.getBlocks().get("C").getCoords().X() -1, curr.getBlocks().get("C").getCoords().Y());
+        dc.setCoords(curr.getBlocks().get("D").getCoords().X() -1, curr.getBlocks().get("D").getCoords().Y());
+
+        if (!(ac.X() >= 0 && bc.X() >= 0 && cc.X() >= 0 && dc.X() >= 0 )){
+            return false;
+        }
+
+        for (Block b: placed){
+            if (b.getCoords().equals(ac) || b.getCoords().equals(bc) ||
+                    b.getCoords().equals(cc) || b.getCoords().equals(dc)){
+                return false;
+            }
+        }
+
+        return true;
+
+
+    }
+
+    public void shiftLeft(){
+       if(validSL()){
+           curr.getBlocks().get("A").getCoords().setCoords(curr.getBlocks().get("A").getCoords().X() -1,
+                   curr.getBlocks().get("A").getCoords().Y());;
+           curr.getBlocks().get("B").getCoords().setCoords(curr.getBlocks().get("B").getCoords().X() -1,
+                   curr.getBlocks().get("B").getCoords().Y());;
+           curr.getBlocks().get("C").getCoords().setCoords(curr.getBlocks().get("C").getCoords().X() -1,
+                   curr.getBlocks().get("C").getCoords().Y());;
+           curr.getBlocks().get("D").getCoords().setCoords(curr.getBlocks().get("D").getCoords().X() -1,
+                   curr.getBlocks().get("D").getCoords().Y());;
+       }
+    }
+
+    public boolean validSR(){
+
+        Coords ac = new Coords();
+        Coords bc = new Coords();
+        Coords cc = new Coords();
+        Coords dc = new Coords();
+
+        ac.setCoords(curr.getBlocks().get("A").getCoords().X() +1, curr.getBlocks().get("A").getCoords().Y());
+        bc.setCoords(curr.getBlocks().get("B").getCoords().X() +1, curr.getBlocks().get("B").getCoords().Y());
+        cc.setCoords(curr.getBlocks().get("C").getCoords().X() +1, curr.getBlocks().get("C").getCoords().Y());
+        dc.setCoords(curr.getBlocks().get("D").getCoords().X() +1, curr.getBlocks().get("D").getCoords().Y());
+
+        if (!(ac.X() < maxX && bc.X() < maxX && cc.X() < maxX && dc.X() < maxX )){
+            return false;
+        }
+
+        for (Block b: placed){
+            if (b.getCoords().equals(ac) || b.getCoords().equals(bc) ||
+                    b.getCoords().equals(cc) || b.getCoords().equals(dc)){
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
+    public void shiftRight(){
+        if (validSR()){
+            curr.getBlocks().get("A").getCoords().setCoords(curr.getBlocks().get("A").getCoords().X() +1,
+                    curr.getBlocks().get("A").getCoords().Y());;
+            curr.getBlocks().get("B").getCoords().setCoords(curr.getBlocks().get("B").getCoords().X() +1,
+                    curr.getBlocks().get("B").getCoords().Y());;
+            curr.getBlocks().get("C").getCoords().setCoords(curr.getBlocks().get("C").getCoords().X() +1,
+                    curr.getBlocks().get("C").getCoords().Y());;
+            curr.getBlocks().get("D").getCoords().setCoords(curr.getBlocks().get("D").getCoords().X() +1,
+                    curr.getBlocks().get("D").getCoords().Y());;
         }
     }
 

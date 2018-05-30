@@ -4,13 +4,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.mainpackage.Screens.MainGameScreen;
+import com.mygdx.mainpackage.Screens.MGSDesktop;
 import com.mygdx.mainpackage.Screens.MainMenuScreen;
 
 public class Tetris extends Game {
 
 	public SpriteBatch batch;
 	public boolean sound;
+	public boolean mobile; //False for Desktop, True for Android
 	public Music music;
 	public GameState g;
 
@@ -33,7 +34,7 @@ public class Tetris extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		g = new GameState('N');
-		this.setScreen(new MainGameScreen(this));
+		this.setScreen(new MainMenuScreen(this));
 
 		sound = true;
 		music = Gdx.audio.newMusic(Gdx.files.internal("Tetris.mp3"));

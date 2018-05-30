@@ -30,7 +30,7 @@ public class TetroL extends Tetromino {
 
             case 1:
                 this.blocks.get("A").getCoords().setCoords(ac.X() - 2, ac.Y() + 0);
-                this.blocks.get("B").getCoords().setCoords(bc.X() - 1, bc.Y() + 1);
+                this.blocks.get("B").getCoords().setCoords(bc.X() - 1, bc.Y() - 1);
                 this.blocks.get("D").getCoords().setCoords(dc.X() + 1, dc.Y() + 1);
                 this.dir = 2;
                 break;
