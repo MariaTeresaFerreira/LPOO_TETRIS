@@ -81,8 +81,15 @@ public class MainGameScreen implements Screen{
 
         Coords c = genScreenCoords(b);
 
+        /*
         if (c.X() >= displacementX && c.X() <= Gdx.graphics.getWidth() - displacementX){
             if (c.Y() <= displacementY + blockSize && c.Y() >= (Gdx.graphics.getHeight() - displacementY) - 2*blockSize) {
+                return true;
+            }
+        }*/
+
+        if(c.X() >= displacementX && c.X() <= displacementX + 10 * blockSize){
+            if (c.Y() <= displacementY + blockSize && c.Y() >=  displacementY - 14 * blockSize);{
                 return true;
             }
         }
@@ -160,14 +167,14 @@ public class MainGameScreen implements Screen{
 
         for (i = -1; i < 11; i++){
 
-            t.batch.draw(spriteMap.get("W"), displacementX + i*blockSize,  Gdx.graphics.getHeight() - displacementY - 2*blockSize, blockSize, blockSize);
-            t.batch.draw(spriteMap.get("W"), displacementX + i*blockSize, displacementY + 2*blockSize, blockSize, blockSize);
+            t.batch.draw(spriteMap.get("W"), displacementX + i * blockSize, displacementY - 14 * blockSize, blockSize, blockSize); //linha de baixo
+            t.batch.draw(spriteMap.get("W"), displacementX + i * blockSize, displacementY + blockSize, blockSize, blockSize); //linha de cima
 
         }
 
         for (j = -1; j < 14; j++) {
-            t.batch.draw(spriteMap.get("W"), displacementX - blockSize, displacementY - j * blockSize, blockSize, blockSize);
-            t.batch.draw(spriteMap.get("W"), Gdx.graphics.getWidth() - displacementX - (float)(1.75* blockSize), displacementY - j * blockSize, blockSize, blockSize);
+            t.batch.draw(spriteMap.get("W"), displacementX - blockSize, displacementY - j * blockSize, blockSize, blockSize); // esquerda
+            t.batch.draw(spriteMap.get("W"), displacementX + 10 * blockSize, displacementY  - j * blockSize ,blockSize, blockSize); // direita
         }
 
         t.batch.end();
@@ -222,7 +229,7 @@ public class MainGameScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        //stage.getViewport().update(width, height);
+        stage.getViewport().update(width, height);
     }
 
 }

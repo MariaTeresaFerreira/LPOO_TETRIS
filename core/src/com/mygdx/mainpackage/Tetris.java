@@ -33,6 +33,7 @@ public class Tetris extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		g = new GameState('N');
+		//this.setScreen(new MainMenuScreen(this));
 		this.setScreen(new MainGameScreen(this));
 
 		sound = true;
