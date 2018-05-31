@@ -223,4 +223,8 @@ public class GameState {
         lines[i] = value;
     }
 
+    public void setLines(int[] nl){
+        lines = nl;
+    }
+
 }

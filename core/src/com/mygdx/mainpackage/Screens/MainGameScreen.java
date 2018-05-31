@@ -8,6 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.mainpackage.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -202,7 +203,7 @@ public class MainGameScreen implements Screen{
 
     public int deleteLine(){
 
-        LinkedList <Block> newList = new LinkedList<Block>();
+        LinkedList <Block> newBlockList = new LinkedList<Block>();
 
         int line = findLine();
 
@@ -212,24 +213,39 @@ public class MainGameScreen implements Screen{
 
         for(Block b: t.g.getPlaced()){
             if(b.getCoords().Y() > line){
-                newList.add(b);
+                newBlockList.add(b);
             }else if (b.getCoords().Y() < line){
                 Block c = new Block (new Coords(b.getCoords().X(), b.getCoords().Y() + 1), b.getColour(), b.getPower());
-                newList.add(c);
+                newBlockList.add(c);
             }
         }
 
-        t.g.setPlaced(newList);
+        t.g.setPlaced(newBlockList);
+
+        //TESTE
+
+        int[] newList = new int[15];
+
 
         for(int i = 0; i <= line; i++){
             if (i == 0){
-                t.g.setLinesValue(0, 0);
+                newList[0] = 0;
             } else {
-                t.g.setLinesValue(i, t.g.getLines()[i-1]);
+                newList[i] = t.g.getLines()[i - 1];
             }
         }
 
-        t.g.getLines()[line] = 0;
+        t.g.setLines(newList);
+
+        /*
+        for(int i = 0; i < t.g.getLines().length; i++){
+            System.out.print(i + " ");
+            System.out.println(t.g.getLines()[i]);
+        }*/
+
+
+
+
         return 0;
 
     }
@@ -250,8 +266,10 @@ public class MainGameScreen implements Screen{
         t.batch.draw(background, 0, 0);
         t.batch.end();
         stage.draw();
-        //while(deleteLine() != new Float(-1));
-        deleteLine();
+        //while(deleteLine() != -1);
+        for(int i = 0; i <4; i++) {
+            deleteLine();
+        }
         drawTetromino(t.g.getCurr());
         drawPlayingField();
         drawPlaced();
