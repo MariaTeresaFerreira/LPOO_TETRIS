@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.mainpackage.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 
 public class MainGameScreen implements Screen{
@@ -182,6 +183,59 @@ public class MainGameScreen implements Screen{
         t.batch.end();
     }
 
+
+    public int findLine(){
+
+        //System.out.println("2");
+
+        for(int i = 0; i < 15; i++){
+
+            /*
+            if(t.g.getFullLines().get(i) == 10){
+                return t.g.getFullLines().get(i);
+            }*/
+
+            if(t.g.getLines()[i] == 10){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int deleteLine(){
+
+        LinkedList <Block> newList = new LinkedList<Block>();
+
+        int line = findLine();
+
+        if(line == new Float(-1)){
+            return line;
+        }
+
+        for(Block b: t.g.getPlaced()){
+            if(b.getCoords().Y() > line){
+                newList.add(b);
+            }else if (b.getCoords().Y() < line){
+                Block c = new Block (new Coords(b.getCoords().X(), b.getCoords().Y() + 1), b.getColour(), b.getPower());
+                newList.add(c);
+            }
+        }
+
+        t.g.setPlaced(newList);
+
+        for(int i = 0; i <= line; i++){
+            if (i == 0){
+                t.g.setLinesValue(0, 0);
+            } else {
+                t.g.setLinesValue(i, t.g.getLines()[i-1]);
+            }
+        }
+
+        t.g.getLines()[line] = 0;
+        return 0;
+
+    }
+
     @Override
     public void dispose() {
 
@@ -198,6 +252,8 @@ public class MainGameScreen implements Screen{
         t.batch.draw(background, 0, 0);
         t.batch.end();
         stage.draw();
+        //while(deleteLine() != new Float(-1));
+        deleteLine();
         drawTetromino(t.g.getCurr());
         drawPlayingField();
         drawPlaced();
