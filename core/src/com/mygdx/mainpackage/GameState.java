@@ -114,12 +114,20 @@ public class GameState {
             curr.getBlocks().get("C").getCoords().setCoords(cc.X() + 0, cc.Y() + 1);
             curr.getBlocks().get("D").getCoords().setCoords(dc.X() + 0, dc.Y() + 1);
         } else {
-            lock();
 
             lines[(int)curr.getBlocks().get("A").getCoords().Y()] += 1;
             lines[(int)curr.getBlocks().get("B").getCoords().Y()] += 1;
             lines[(int)curr.getBlocks().get("C").getCoords().Y()] += 1;
             lines[(int)curr.getBlocks().get("D").getCoords().Y()] += 1;
+
+
+            lock();
+
+            //TESTE
+            for(int i = 0; i < lines.length; i++){
+                System.out.print(i + " ");
+                System.out.println(lines[i]);
+            } System.out.println();
 
 
             curr = genTetromino('N');
@@ -132,12 +140,19 @@ public class GameState {
             drop();
         }
 
-        lock();
 
         lines[(int)curr.getBlocks().get("A").getCoords().Y()] += 1;
         lines[(int)curr.getBlocks().get("B").getCoords().Y()] += 1;
         lines[(int)curr.getBlocks().get("C").getCoords().Y()] += 1;
         lines[(int)curr.getBlocks().get("D").getCoords().Y()] += 1;
+
+        lock();
+
+        //TESTE
+        for(int i = 0; i < lines.length; i++){
+            System.out.print(i + " ");
+            System.out.println(lines[i]);
+        } System.out.println();
     }
 
 

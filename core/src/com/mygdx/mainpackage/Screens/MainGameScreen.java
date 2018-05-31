@@ -187,14 +187,8 @@ public class MainGameScreen implements Screen{
 
     public int findLine(){
 
-        //System.out.println("2");
 
         for(int i = 0; i < 15; i++){
-
-            /*
-            if(t.g.getFullLines().get(i) == 10){
-                return t.g.getFullLines().get(i);
-            }*/
 
             if(t.g.getLines()[i] == 10){
                 return i;
@@ -208,6 +202,7 @@ public class MainGameScreen implements Screen{
         LinkedList <Block> newBlockList = new LinkedList<Block>();
 
         int line = findLine();
+
 
         if(line == new Float(-1)){
             return line;
@@ -271,6 +266,7 @@ public class MainGameScreen implements Screen{
         //while(deleteLine() != -1);
         for(int i = 0; i <4; i++) {
             deleteLine();
+            //System.out.println("1");
         }
         drawTetromino(t.g.getCurr());
         drawPlayingField();
