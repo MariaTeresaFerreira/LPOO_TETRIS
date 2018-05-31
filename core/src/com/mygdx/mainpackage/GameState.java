@@ -1,6 +1,6 @@
 package com.mygdx.mainpackage;
 
-
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -10,9 +10,16 @@ public class GameState {
     private Tetromino hold;
     private LinkedList<Block> placed = new LinkedList<Block>();
     private LinkedList<Tetromino> next = new LinkedList<Tetromino>();
+    private int[] lines = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     private char mode;
 
     private int maxX = 10;
+
+    public GameState(char mode){
+        this.mode = mode;
+        this.curr = this.genTetromino('N');
+        this.next.add(this.genTetromino('N'));
+    }
 
     public Tetromino genTetromino(char power){
         Random randomno = new Random();
@@ -77,6 +84,13 @@ public class GameState {
             placed.add(curr.getBlocks().get("B"));
             placed.add(curr.getBlocks().get("C"));
             placed.add(curr.getBlocks().get("D"));
+
+            lines[(int)curr.getBlocks().get("A").getCoords().Y()] += 1;
+            lines[(int)curr.getBlocks().get("B").getCoords().Y()] += 1;
+            lines[(int)curr.getBlocks().get("C").getCoords().Y()] += 1;
+            lines[(int)curr.getBlocks().get("D").getCoords().Y()] += 1;
+
+
             curr = genTetromino('N');
         }
     }
@@ -91,9 +105,15 @@ public class GameState {
         placed.add(curr.getBlocks().get("B"));
         placed.add(curr.getBlocks().get("C"));
         placed.add(curr.getBlocks().get("D"));
-        curr = genTetromino('N');
 
+        lines[(int)curr.getBlocks().get("A").getCoords().Y()] += 1;
+        lines[(int)curr.getBlocks().get("B").getCoords().Y()] += 1;
+        lines[(int)curr.getBlocks().get("C").getCoords().Y()] += 1;
+        lines[(int)curr.getBlocks().get("D").getCoords().Y()] += 1;
+
+        curr = genTetromino('N');
     }
+
 
     public boolean validSL(){
         Coords ac = new Coords();
@@ -179,11 +199,6 @@ public class GameState {
         return this.curr;
     }
 
-    public GameState(char mode){
-        this.mode = mode;
-        this.curr = this.genTetromino('N');
-        this.next.add(this.genTetromino('N'));
-    }
 
     public boolean defeat(){
         for(Block b: placed){
@@ -195,4 +210,17 @@ public class GameState {
     public LinkedList<Block> getPlaced(){
         return this.placed;
     }
+
+    public void setPlaced(LinkedList<Block> b){
+        this.placed = b;
+    }
+
+    public int[] getLines(){
+        return this.lines;
+    }
+
+    public void setLinesValue(int i, int value){
+        lines[i] = value;
+    }
+
 }

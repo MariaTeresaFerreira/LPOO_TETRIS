@@ -1,6 +1,7 @@
 package com.mygdx.mainpackage.Screens;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.mainpackage.GameState;
 import com.mygdx.mainpackage.Tetris;
 
 public class SwapImageClick {
@@ -233,6 +234,7 @@ public class SwapImageClick {
 
         if(valid){
             if(!t.mobile) {
+                t.g = new GameState('N');
                 t.setScreen(new MGSDesktop(t));
             }
         }
