@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.mainpackage.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
+import java.awt.event.TextEvent;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -21,8 +23,10 @@ public class MainGameScreen implements Screen{
     protected Stage stage;
     protected Tetris t;
     protected Texture background= new Texture("background2.png");
-    protected Texture boxes = new Texture("HoldNextBox.png");
-    //TODO: DESENHAR HOLD
+    protected Texture holdNextBox = new Texture("HoldNextBox.png");
+    protected Texture holdText = new Texture("hold.png");
+    protected Texture nextText = new Texture("next.png");
+    protected Texture scoreText = new Texture("score.png");
     protected Sprite muteSprite = new Sprite (new Texture("sound.png"));
     protected HashMap<String, Sprite> spriteMap = new HashMap<String, Sprite>();
 
@@ -239,6 +243,43 @@ public class MainGameScreen implements Screen{
 
     }
 
+    public void drawHold(){
+        t.batch.begin();
+        t.batch.draw(holdNextBox, 150, 430, blockSize * 4, blockSize * 4);
+        t.batch.draw(holdNextBox, 150, 130, blockSize * 4, blockSize * 4);
+        t.batch.draw(holdText, 150, 600, blockSize * 4, blockSize * 2);
+        t.batch.draw(nextText, 150, 300, blockSize * 4, blockSize * 2);
+
+        t.batch.end();
+    }
+
+    public void clearLinesScore(){
+        int noOfLines = 0;
+        int pointsAdded = 0;
+        while(deleteLine() != -1){
+            noOfLines ++;
+        }
+        switch (noOfLines){
+            case 1:
+                pointsAdded = 100;
+                break;
+            case 2:
+                pointsAdded = 250;
+                break;
+            case 3:
+                pointsAdded = 500;
+                break;
+            case 4:
+                pointsAdded = 1000;
+                break;
+            default:
+                break;
+        }
+
+        t.g.incrementScore(pointsAdded);
+
+    }
+
     @Override
     public void dispose() {
 
@@ -256,17 +297,17 @@ public class MainGameScreen implements Screen{
         t.batch.end();
         stage.draw();
         //while(deleteLine() != -1);
-        /*for(int i = 0; i <4; i++) {
-            deleteLine();
-        }*/
-        deleteLine();
+        clearLinesScore();
         drawTetromino(t.g.getCurr());
         drawPlayingField();
         drawPlaced();
+        drawHold();
         if (t.g.defeat()){
             this.dispose();
             t.setScreen(new GameOverScreen(t));
         }
+
+        System.out.println(t.g.getScore());
         //t.batch.end();
     }
 

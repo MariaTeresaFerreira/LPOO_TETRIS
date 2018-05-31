@@ -13,6 +13,7 @@ public class GameState {
     private LinkedList<Tetromino> next = new LinkedList<Tetromino>();
     private int[] lines = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     private char mode;
+    private int score;
 
     private int maxX = 10;
 
@@ -21,6 +22,7 @@ public class GameState {
         this.canHold = true;
         this.curr = this.genTetromino('N');
         this.next.add(this.genTetromino('N'));
+        score = 0;
     }
 
     public Tetromino genTetromino(char power){
@@ -137,6 +139,8 @@ public class GameState {
         lines[(int)curr.getBlocks().get("C").getCoords().Y()] += 1;
         lines[(int)curr.getBlocks().get("D").getCoords().Y()] += 1;
         lock();
+
+        score += 10;
     }
 
 
@@ -249,6 +253,13 @@ public class GameState {
 
     public void setLines(int[] nl){
         lines = nl;
+    }
+
+    public void incrementScore(int value){
+        this.score += value;
+    }
+    public int getScore(){
+        return this.score;
     }
 
 }
