@@ -203,9 +203,8 @@ public class MainGameScreen implements Screen{
 
         int line = findLine();
 
-
-        if(line == new Float(-1)){
-            return line;
+        if(line == -1){
+            return -1;
         }
 
         for(Block b: t.g.getPlaced()){
@@ -219,7 +218,6 @@ public class MainGameScreen implements Screen{
 
         t.g.setPlaced(newBlockList);
 
-        //TESTE
 
         int[] newList = new int[15];
 
@@ -231,17 +229,11 @@ public class MainGameScreen implements Screen{
                 newList[i] = t.g.getLines()[i - 1];
             }
         }
+        for (int j = line + 1; j < 15; j ++){
+            newList[j] = t.g.getLines()[j];
+        }
 
         t.g.setLines(newList);
-
-        /*
-        for(int i = 0; i < t.g.getLines().length; i++){
-            System.out.print(i + " ");
-            System.out.println(t.g.getLines()[i]);
-        }*/
-
-
-
 
         return 0;
 
@@ -264,10 +256,10 @@ public class MainGameScreen implements Screen{
         t.batch.end();
         stage.draw();
         //while(deleteLine() != -1);
-        for(int i = 0; i <4; i++) {
+        /*for(int i = 0; i <4; i++) {
             deleteLine();
-            //System.out.println("1");
-        }
+        }*/
+        deleteLine();
         drawTetromino(t.g.getCurr());
         drawPlayingField();
         drawPlaced();

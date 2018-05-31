@@ -120,17 +120,15 @@ public class GameState {
             lines[(int)curr.getBlocks().get("C").getCoords().Y()] += 1;
             lines[(int)curr.getBlocks().get("D").getCoords().Y()] += 1;
 
-
             lock();
 
             //TESTE
-            for(int i = 0; i < lines.length; i++){
+
+            for(int i = 0; i < this.getLines().length; i++){
                 System.out.print(i + " ");
-                System.out.println(lines[i]);
+                System.out.println(this.getLines()[i]);
             } System.out.println();
 
-
-            curr = genTetromino('N');
         }
     }
 
@@ -149,12 +147,13 @@ public class GameState {
         lock();
 
         //TESTE
-        for(int i = 0; i < lines.length; i++){
-            System.out.print(i + " ");
-            System.out.println(lines[i]);
-        } System.out.println();
-    }
 
+        for(int i = 0; i < this.getLines().length; i++){
+            System.out.print(i + " ");
+            System.out.println(this.getLines()[i]);
+        } System.out.println();
+
+    }
 
     public boolean validSL(){
         Coords ac = new Coords();
