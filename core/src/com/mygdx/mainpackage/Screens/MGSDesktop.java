@@ -34,7 +34,7 @@ public class MGSDesktop extends MainGameScreen {
                     t.g.hardDrop();
                 }
 
-                if(keycode == Input.Keys.SHIFT_LEFT){
+                if(keycode == Input.Keys.SHIFT_LEFT && keycode == Input.Keys.SHIFT_RIGHT){
                     t.g.hold();
                 }
 
