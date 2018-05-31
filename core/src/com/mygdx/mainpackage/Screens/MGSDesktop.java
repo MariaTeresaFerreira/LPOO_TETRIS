@@ -15,7 +15,7 @@ public class MGSDesktop extends MainGameScreen {
             public boolean keyDown(InputEvent event, int keycode) {
 
                 if (keycode == Input.Keys.UP || keycode == Input.Keys.W){
-                    t.g.getCurr().rotate();
+                    t.g.getCurr().rotate(t.g.getPlaced());
                 }
 
                 if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S){
@@ -32,6 +32,10 @@ public class MGSDesktop extends MainGameScreen {
 
                 if (keycode == Input.Keys.SPACE){
                     t.g.hardDrop();
+                }
+
+                if(keycode == Input.Keys.SHIFT_LEFT){
+                    t.g.hold();
                 }
 
 
