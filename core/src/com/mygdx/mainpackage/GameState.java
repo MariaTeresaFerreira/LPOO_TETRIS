@@ -8,6 +8,7 @@ public class GameState {
 
     private Tetromino curr;
     private Tetromino hold;
+    private boolean canHold;
     private LinkedList<Block> placed = new LinkedList<Block>();
     private LinkedList<Tetromino> next = new LinkedList<Tetromino>();
     private int[] lines = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -17,6 +18,7 @@ public class GameState {
 
     public GameState(char mode){
         this.mode = mode;
+        this.canHold = true;
         this.curr = this.genTetromino('N');
         this.next.add(this.genTetromino('N'));
     }
@@ -41,6 +43,28 @@ public class GameState {
                 return (new TetroT(power));
 
         }
+    }
+
+    public void hold(){
+        if(this.canHold) {
+            if (this.hold == null) {
+                this.hold = this.curr;
+                this.hold.blocks = this.hold.startingPos;
+                this.next.remove(0);
+                this.next.add(genTetromino('N'));
+            } else {
+                Tetromino temp = this.hold;
+                this.hold = this.curr;
+                this.hold.blocks = this.hold.startingPos;
+                this.curr = temp;
+            }
+
+            this.canHold = false;
+        }
+    }
+
+    public void canHold(){
+        this.canHold = true;
     }
 
     public boolean canDrop(Coords a){
@@ -68,6 +92,17 @@ public class GameState {
         return false;
     }
 
+    public void lock(){
+        placed.add(curr.getBlocks().get("A"));
+        placed.add(curr.getBlocks().get("B"));
+        placed.add(curr.getBlocks().get("C"));
+        placed.add(curr.getBlocks().get("D"));
+        curr = this.next.get(0);
+        this.next.remove(0);
+        this.next.add(genTetromino('N'));
+        canHold();
+    }
+
     public void drop(){
         Coords ac = curr.getBlocks().get("A").getCoords();
         Coords bc = curr.getBlocks().get("B").getCoords();
@@ -78,12 +113,8 @@ public class GameState {
             curr.getBlocks().get("B").getCoords().setCoords(bc.X() + 0, bc.Y() + 1);
             curr.getBlocks().get("C").getCoords().setCoords(cc.X() + 0, cc.Y() + 1);
             curr.getBlocks().get("D").getCoords().setCoords(dc.X() + 0, dc.Y() + 1);
-        }
-        else {
-            placed.add(curr.getBlocks().get("A"));
-            placed.add(curr.getBlocks().get("B"));
-            placed.add(curr.getBlocks().get("C"));
-            placed.add(curr.getBlocks().get("D"));
+        } else {
+            lock();
 
             lines[(int)curr.getBlocks().get("A").getCoords().Y()] += 1;
             lines[(int)curr.getBlocks().get("B").getCoords().Y()] += 1;
@@ -101,17 +132,12 @@ public class GameState {
             drop();
         }
 
-        placed.add(curr.getBlocks().get("A"));
-        placed.add(curr.getBlocks().get("B"));
-        placed.add(curr.getBlocks().get("C"));
-        placed.add(curr.getBlocks().get("D"));
+        lock();
 
         lines[(int)curr.getBlocks().get("A").getCoords().Y()] += 1;
         lines[(int)curr.getBlocks().get("B").getCoords().Y()] += 1;
         lines[(int)curr.getBlocks().get("C").getCoords().Y()] += 1;
         lines[(int)curr.getBlocks().get("D").getCoords().Y()] += 1;
-
-        curr = genTetromino('N');
     }
 
 
@@ -198,7 +224,6 @@ public class GameState {
     public Tetromino getCurr(){
         return this.curr;
     }
-
 
     public boolean defeat(){
         for(Block b: placed){

@@ -21,6 +21,8 @@ public class MainGameScreen implements Screen{
     protected Stage stage;
     protected Tetris t;
     protected Texture background= new Texture("background2.png");
+    protected Texture boxes = new Texture("HoldNextBox.png");
+    //TODO: DESENHAR HOLD
     protected Sprite muteSprite = new Sprite (new Texture("sound.png"));
     protected HashMap<String, Sprite> spriteMap = new HashMap<String, Sprite>();
 

@@ -11,7 +11,6 @@ public class DesktopLauncher {
 		t.mobile = false;
 		new LwjglApplication(t, config);
 		config.resizable = true;
-		//TODO: Tentar por isto adaptável (se tivermos tempo :P )
 		config.width = 1600;
 		config.height = 900;
 		//config.fullscreen = true;

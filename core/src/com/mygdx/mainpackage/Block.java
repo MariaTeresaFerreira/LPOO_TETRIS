@@ -17,6 +17,14 @@ public class Block {
         canDrop = true;
     }
 
+    public Block(Block b){
+        this.coords = new Coords();
+        this.coords.setCoords(b.getCoords());
+        this.colour = b.colour;
+        this.power = b.power;
+        canDrop = b.canDrop;
+    }
+
     public Block(Coords c, char colour, char pow) {
         this.coords = c;
         this.colour = colour;
