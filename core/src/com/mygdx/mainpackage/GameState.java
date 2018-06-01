@@ -333,6 +333,9 @@ public class GameState {
         lock();
 
         score += 10;
+        if(score > 999999999){
+            score = 999999999;
+        }
     }
 
 
@@ -453,6 +456,9 @@ public class GameState {
 
     public void incrementScore(int value){
         this.score += value;
+        if(this.score > 999999999){
+            this.score = 999999999;
+        }
     }
     public int getScore(){
         return this.score;
