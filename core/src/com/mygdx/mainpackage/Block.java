@@ -4,7 +4,7 @@ package com.mygdx.mainpackage;
  * Created by pppereira3 on 29-05-2018.
  */
 
-public class Block {
+public class Block implements Comparable<Block>{
     private Coords coords;
     private char colour;
     private char power;
@@ -40,6 +40,10 @@ public class Block {
         this.coords.setCoords(c);
     }
 
+    public void setCoords(float x, float y){
+        this.getCoords().setCoords(x, y);
+    }
+
     public char getColour(){
         return  this.colour;
     }
@@ -54,9 +58,9 @@ public class Block {
 
     public String toString(){
         String s = "";
-        s += this.colour + "\n";
+        //s += this.colour + "\n";
         s += "(" + this.getCoords().X() + ", " + this.getCoords().Y() + ")\n";
-        s += this.power;
+        //s += this.power;
         return s;
     }
 

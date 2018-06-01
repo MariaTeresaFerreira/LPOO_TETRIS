@@ -1,6 +1,6 @@
 package com.mygdx.mainpackage;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -12,15 +12,63 @@ public class GameState {
     private LinkedList<Block> placed = new LinkedList<Block>();
     private LinkedList<Tetromino> next = new LinkedList<Tetromino>();
     private int[] lines = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private char mode;
+    private char mode; // C ---> Classic, K ---> Kray-Z Blox, E ---> Escape The Matrix
+    private char activeEffect; // R ---> Rotation Lock, U ---> Speed Up, D ---> Speed Down, N ---> None
+    public Float effectTimer;
 
     private int maxX = 10;
 
-    public GameState(char mode){
-        this.mode = mode;
+    public GameState(){
+        this.mode = 'C'; // Default
         this.canHold = true;
         this.curr = this.genTetromino('N');
         this.next.add(this.genTetromino('N'));
+        this.activeEffect = 'N';
+        this.effectTimer = 0.0f;
+    }
+
+    public void setMode(char mode){
+        this.mode = mode;
+    }
+
+    public char genPower(){
+
+        if (mode == 'K') {
+            Random randomno = new Random();
+            int x = randomno.nextInt(100);
+            if (x > 20){
+                x = randomno.nextInt(11);
+                /*switch (x){
+                    case 0:
+                        return 'T'; // NEXT 5 TETROMINOES ARE T-SHAPED
+                    case 1:
+                        return 'I'; // NEXT 5 TETROMINOES ARE I-SHAPED
+                    case 2:
+                        return 'O'; // NEXT 5 TETROMINOES ARE O-SHAPED
+                    case 3:
+                        return 'L'; // NEXT 5 TETROMINOES ARE L-SHAPED
+                    case 4:
+                        return 'J'; // NEXT 5 TETROMINOES ARE J-SHAPED
+                    case 5:
+                        return 'S'; // NEXT 5 TETROMINOES ARE S-SHAPED
+                    case 6:
+                        return 'Z'; // NEXT 5 TETROMINOES ARE Z-SHAPED
+                    case 7:
+                        return '+'; // FOR 10 s, SPEED IS SET TO 0.25 (4 drops/sec)
+                    case 8:
+                        return '-'; // FOR 10 s, SPEED IS SET TO 2 (0.5 drops/sec)
+                    case 9:
+                        return 'R'; // FOR 10 s, ROTATION IS LOCKED
+                    case 10:
+                        return 'K'; // SHIFTS THE PLACED BLOCKS TO THE LEFT AND DOWN, FILLING THE SPACES AND BREAKING LINES
+                    default:
+                        break;
+                }*/
+                return 'K';
+            }
+        }
+
+        return 'N';
     }
 
     public Tetromino genTetromino(char power){
@@ -45,6 +93,26 @@ public class GameState {
         }
     }
 
+    public Tetromino genSpecTetromino(char spec){
+        switch (spec){
+            case 'I':
+                return (new TetroI('N'));
+            case 'L':
+                return (new TetroL('N'));
+            case 'J':
+                return (new TetroJ('N'));
+            case 'O':
+                return (new TetroO('N'));
+            case 'S':
+                return (new TetroS('N'));
+            case 'Z':
+                return (new TetroZ('N'));
+            default:
+                return (new TetroT('N'));
+
+        }
+    }
+
     public void hold(){
         if(this.canHold) {
             if (this.hold == null) {
@@ -53,7 +121,9 @@ public class GameState {
                 this.hold.blocks = this.hold.startingPos;
                 this.curr = this.next.get(0);
                 this.next.remove(0);
-                this.next.add(genTetromino('N'));
+                if (this.next.size() == 0) {
+                    this.next.add(genTetromino(genPower()));
+                }
             } else {
                 Tetromino temp = this.hold;
                 this.hold = this.curr;
@@ -102,8 +172,11 @@ public class GameState {
         placed.add(curr.getBlocks().get("D"));
         curr = this.next.get(0);
         this.next.remove(0);
-        this.next.add(genTetromino('N'));
+        if (this.next.size() == 0) {
+            this.next.add(genTetromino(genPower()));
+        }
         canHold();
+        Collections.sort(placed); //Sort Block List
     }
 
     public void drop(){
@@ -123,6 +196,94 @@ public class GameState {
             lines[(int)curr.getBlocks().get("C").getCoords().Y()] += 1;
             lines[(int)curr.getBlocks().get("D").getCoords().Y()] += 1;
             lock();
+        }
+    }
+
+    public void setNext5P(char next){
+        this.next.clear();
+        Tetromino t1 = genSpecTetromino(next);
+        Tetromino t2 = genSpecTetromino(next);
+        Tetromino t3 = genSpecTetromino(next);
+        Tetromino t4 = genSpecTetromino(next);
+        Tetromino t5 = genSpecTetromino(next);
+
+
+        this.next.add(t1);
+        this.next.add(t2);
+        this.next.add(t3);
+        this.next.add(t4);
+        this.next.add(t5);
+    }
+
+    public void clearEffect(){
+        this.activeEffect = 'N';
+        this.effectTimer = 0f;
+    }
+
+    public char getActiveEffect(){
+        return activeEffect;
+    }
+
+    public boolean canSlideLeft(Block b){
+        int i = 0;
+        Block c = new Block(b);
+        if (b.getCoords().X() == 0) return false;
+        c.setCoords(c.getCoords().X() - 1, c.getCoords().Y());
+        while(i < placed.size()){
+            if (placed.get(i).getCoords().equals(c)) return false;
+            i++;
+        }
+        return true;
+    }
+
+    public void shiftPlacedLeft(){
+        for (Block b: placed){
+            while(canSlideLeft(b)){
+                b.setCoords(b.getCoords().X() - 1, b.getCoords().Y());
+            }
+        }
+    }
+
+    public void activatePower(char power){
+        switch (power){
+            case 'I':
+                setNext5P('I');
+                break;
+            case 'L':
+                setNext5P('L');
+                break;
+            case 'J':
+                setNext5P('J');
+                break;
+            case 'O':
+                setNext5P('O');
+                break;
+            case 'S':
+                setNext5P('S');
+                break;
+            case 'Z':
+                setNext5P('Z');
+                break;
+            case 'T':
+                setNext5P('T');
+                break;
+            case '+':
+                activeEffect = 'U';
+                effectTimer = 10f;
+                break;
+            case '-':
+                activeEffect = 'D';
+                effectTimer = 10f;
+                break;
+            case 'R':
+                activeEffect = 'R';
+                effectTimer = 10f;
+                break;
+            case 'K':
+                //shiftPlacedLeft();
+                break;
+            default:
+                break;
         }
     }
 

@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.mainpackage.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -84,13 +86,6 @@ public class MainGameScreen implements Screen{
     public boolean validScreenCoordsBlock(Block b){
 
         Coords c = genScreenCoords(b);
-
-        /*
-        if (c.X() >= displacementX && c.X() <= Gdx.graphics.getWidth() - displacementX){
-            if (c.Y() <= displacementY + blockSize && c.Y() >= (Gdx.graphics.getHeight() - displacementY) - 2*blockSize) {
-                return true;
-            }
-        }*/
 
         if(c.X() >= displacementX && c.X() <= displacementX + 10 * blockSize){
             if (c.Y() <= displacementY + blockSize && c.Y() >=  displacementY - 14 * blockSize);{
@@ -213,6 +208,8 @@ public class MainGameScreen implements Screen{
             }else if (b.getCoords().Y() < line){
                 Block c = new Block (new Coords(b.getCoords().X(), b.getCoords().Y() + 1), b.getColour(), b.getPower());
                 newBlockList.add(c);
+            } else {
+                t.g.activatePower(b.getPower());
             }
         }
 
@@ -246,19 +243,42 @@ public class MainGameScreen implements Screen{
 
     @Override
     public void render(float delta) {
+        //TODO: FIX TETROMINOES DRAWING OUTSIDE PLAYING FIELD
         time += Gdx.graphics.getDeltaTime();
-        if (time >= 1){
-            t.g.drop();
-            time = 0;
+        t.tToIncreaseSpeed += Gdx.graphics.getDeltaTime();
+        if (t.g.effectTimer > 0) {
+            t.g.effectTimer -= Gdx.graphics.getDeltaTime();
+        } else {
+            t.g.effectTimer = 0f;
+            t.g.clearEffect();
+
         }
+        if (t.g.getActiveEffect() != 'U' && t.g.getActiveEffect() != 'D') {
+            if (time >= t.speed) {
+                t.g.drop();
+                time = 0;
+            }
+        }else if (t.g.getActiveEffect() == 'U') {
+            if (time >= 0.25){
+                t.g.drop();
+                time = 0;
+            }
+        } else if (t.g.getActiveEffect() == 'D'){
+            if (time >= 2){
+                t.g.drop();
+                time = 0;
+            }
+        }
+
+        if(t.tToIncreaseSpeed >= 20){
+            t.tToIncreaseSpeed = new Float(0);
+            if (t.speed > 0.3) t.speed -= (float) 0.1;
+        }
+
         t.batch.begin();
         t.batch.draw(background, 0, 0);
         t.batch.end();
         stage.draw();
-        //while(deleteLine() != -1);
-        /*for(int i = 0; i <4; i++) {
-            deleteLine();
-        }*/
         deleteLine();
         drawTetromino(t.g.getCurr());
         drawPlayingField();
@@ -267,7 +287,6 @@ public class MainGameScreen implements Screen{
             this.dispose();
             t.setScreen(new GameOverScreen(t));
         }
-        //t.batch.end();
     }
 
 

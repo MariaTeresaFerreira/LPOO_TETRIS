@@ -234,7 +234,10 @@ public class SwapImageClick {
 
         if(valid){
             if(!t.mobile) {
-                t.g = new GameState('N');
+                t.g = new GameState();
+                if (t.krayZBlox) t.g.setMode('K');
+                if (t.escapeTheMatrix) t.g.setMode('E');
+
                 t.setScreen(new MGSDesktop(t));
             }
         }

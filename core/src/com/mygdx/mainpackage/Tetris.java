@@ -15,6 +15,9 @@ public class Tetris extends Game {
 	public Music music;
 	public GameState g;
 
+	public Float tToIncreaseSpeed;
+	public Float speed;
+
 	public boolean classic;
 	public boolean krayZBlox;
 	public boolean escapeTheMatrix;
@@ -33,8 +36,10 @@ public class Tetris extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		g = new GameState('N');
+		g = new GameState();
 		this.setScreen(new MainMenuScreen(this));
+		tToIncreaseSpeed = (float) 0;
+		speed = (float) 1;
 
 		sound = true;
 		music = Gdx.audio.newMusic(Gdx.files.internal("Tetris.mp3"));

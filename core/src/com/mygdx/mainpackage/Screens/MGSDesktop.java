@@ -14,8 +14,10 @@ public class MGSDesktop extends MainGameScreen {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
 
-                if (keycode == Input.Keys.UP || keycode == Input.Keys.W){
-                    t.g.getCurr().rotate(t.g.getPlaced());
+                if (t.g.getActiveEffect() != 'R') {
+                    if (keycode == Input.Keys.UP || keycode == Input.Keys.W) {
+                        t.g.getCurr().rotate(t.g.getPlaced());
+                    }
                 }
 
                 if (keycode == Input.Keys.DOWN || keycode == Input.Keys.S){

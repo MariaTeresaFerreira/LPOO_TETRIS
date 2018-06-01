@@ -3,7 +3,7 @@ package com.mygdx.mainpackage;
 /**
  * Class for coordinates.
  */
-public class Coords {
+public class Coords implements Comparable<Coords>{
 
     private float x;
     private float y;
@@ -76,16 +76,17 @@ public class Coords {
         this.y = nc.Y();
     }
 
+    @Override
     public int compareTo(Coords c){
-        float dx = Math.abs(this.X() - c.X());
-        float dy = Math.abs(this.Y() - c.Y());
-        if (dx < dy){
-            if (this.Y() < c.Y()) return -1;
+
+        if (this.X() < c.X()) {
+            return -1;
+        } else if (this.X() > c.X()) {
             return 1;
-        }
-        else{
-            if (this.X() < c.X()) return -1;
-            return 1;
+        } else {
+            if (this.Y() > c.Y()) return -1;
+            else if (this.Y() < c.Y()) return 1;
+            else return 0;
         }
     }
 
