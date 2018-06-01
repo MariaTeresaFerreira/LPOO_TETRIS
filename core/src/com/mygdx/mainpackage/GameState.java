@@ -12,9 +12,10 @@ public class GameState {
     private LinkedList<Block> placed = new LinkedList<Block>();
     private LinkedList<Tetromino> next = new LinkedList<Tetromino>();
     private int[] lines = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private char mode; // C ---> Classic, K ---> Kray-Z Blox, E ---> Escape The Matrix
     private char activeEffect; // R ---> Rotation Lock, U ---> Speed Up, D ---> Speed Down, N ---> None
     public Float effectTimer;
+    private char mode;// C ---> Classic, K ---> Kray-Z Blox, E ---> Escape The Matrix
+    private int score;
 
     private int maxX = 10;
 
@@ -25,6 +26,7 @@ public class GameState {
         this.next.add(this.genTetromino('N'));
         this.activeEffect = 'N';
         this.effectTimer = 0.0f;
+        score = 0;
     }
 
     public void setMode(char mode){
@@ -298,6 +300,8 @@ public class GameState {
         lines[(int)curr.getBlocks().get("C").getCoords().Y()] += 1;
         lines[(int)curr.getBlocks().get("D").getCoords().Y()] += 1;
         lock();
+
+        score += 10;
     }
 
 
@@ -412,4 +416,17 @@ public class GameState {
         lines = nl;
     }
 
+    public void incrementScore(int value){
+        this.score += value;
+    }
+    public int getScore(){
+        return this.score;
+    }
+    public Tetromino getNextTetromino(){
+        return next.get(0);
+    }
+
+    public Tetromino getHold() {
+        return hold;
+    }
 }
