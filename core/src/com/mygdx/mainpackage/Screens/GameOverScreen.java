@@ -26,6 +26,19 @@ public class GameOverScreen implements Screen{
     private Viewport vp;
     private Tetris t;
 
+    private Texture zero = new Texture("numbers/0.png");
+    private Texture one = new Texture("numbers/1.png");
+    private Texture two = new Texture("numbers/2.png");
+    private Texture three = new Texture("numbers/3.png");
+    private Texture four = new Texture("numbers/4.png");
+    private Texture five = new Texture("numbers/5.png");
+    private Texture six = new Texture("numbers/6.png");
+    private Texture seven = new Texture("numbers/7.png");
+    private Texture eight = new Texture("numbers/8.png");
+    private Texture nine = new Texture("numbers/9.png");
+
+
+
     public GameOverScreen(Tetris t){
 
         this.t = t;
@@ -44,6 +57,13 @@ public class GameOverScreen implements Screen{
         stage.addActor(exitButton);
         stage.addActor(mainMenuButton);
         Gdx.input.setInputProcessor(stage);
+
+    }
+
+    public void drawScore(){
+
+
+
     }
 
     @Override
