@@ -349,6 +349,15 @@ public class MainGameScreen implements Screen{
         //TODO: FIX TETROMINOES DRAWING OUTSIDE PLAYING FIELD
         time += Gdx.graphics.getDeltaTime();
         t.tToIncreaseSpeed += Gdx.graphics.getDeltaTime();
+
+        if (t.time){
+            t.g.decTimer(Gdx.graphics.getDeltaTime());
+        }
+
+        if (t.sprint){
+            t.g.incTimer(Gdx.graphics.getDeltaTime());
+        }
+
         if (t.g.effectTimer > 0) {
             t.g.effectTimer -= Gdx.graphics.getDeltaTime();
         } else {
@@ -384,15 +393,7 @@ public class MainGameScreen implements Screen{
         stage.draw();
         t.g.clearLinesScore();
         if (t.g.getToSlide()){
-            System.out.println("Was: ");
-            for(Block b: t.g.getPlaced()){
-                System.out.println(b);
-            }
             t.g.shiftPlacedLeft();
-            System.out.println("Is: ");
-            for(Block b: t.g.getPlaced()){
-                System.out.println(b);
-            }
         }
         drawTetromino(t.g.getCurr());
         drawPlayingField();

@@ -16,24 +16,54 @@ public class GameState {
     private char activeEffect; // R ---> Rotation Lock, U ---> Speed Up, D ---> Speed Down, N ---> None
     public Float effectTimer;
     private char mode;// C ---> Classic, K ---> Kray-Z Blox, E ---> Escape The Matrix
+    private char end; //'M' ---> Marathon, 'S' ---> Sprint,  'T' ---> Time
+    private Float timer;
     private int score;
+    private int objective;
     private Boolean toSlide;
 
     private int maxX = 10;
 
     public GameState(){
         this.mode = 'C'; // Default
+        this.end = 'M';  // Default
+        this.timer = 0f;
         this.canHold = true;
         this.curr = this.genTetromino('N');
         this.next.add(this.genTetromino('N'));
         this.activeEffect = 'N';
         this.effectTimer = 0.0f;
         score = 0;
+        objective = 0;
         toSlide = false;
     }
 
     public void setMode(char mode){
         this.mode = mode;
+    }
+
+    public void setEnd(char endM){
+        switch (endM){
+            case 'S':
+                this.end = 'S';
+                objective = 50;
+                break;
+            case 'T':
+                this.end = 'T';
+                this.timer = 60f;
+                break;
+            default:
+                this.end = 'M';
+        }
+    }
+
+    public void decTimer(float deltaTime){
+        timer -= deltaTime;
+
+    }
+
+    public void incTimer(float deltaTime){
+        timer += deltaTime;
     }
 
     public char genPower(){
@@ -43,7 +73,7 @@ public class GameState {
             int x = randomno.nextInt(100);
             if (x > 20){
                 x = randomno.nextInt(11);
-               /* switch (x){
+                switch (x){
                     case 0:
                         return 'T'; // NEXT 5 TETROMINOES ARE T-SHAPED
                     case 1:
@@ -68,8 +98,7 @@ public class GameState {
                         return 'K'; // SHIFTS THE PLACED BLOCKS TO THE LEFT AND DOWN, FILLING THE SPACES AND BREAKING LINES
                     default:
                         break;
-                }*/
-               return 'K';
+                }
             }
         }
 
@@ -395,6 +424,10 @@ public class GameState {
         for(Block b: placed){
             if(b.getCoords().Y() == 0) return true;
         }
+
+        if (end == 'T' && timer <= 0f) return true;
+        if (end == 'S' && objective <= 0) return true;
+
         return false;
     }
 
@@ -430,6 +463,10 @@ public class GameState {
 
     public Tetromino getHold() {
         return hold;
+    }
+
+    public float getTimer(){
+        return timer;
     }
 
 
@@ -520,6 +557,7 @@ public class GameState {
             default:
                 break;
         }
+        objective -= noOfLines;
 
         incrementScore(pointsAdded);
 

@@ -13,7 +13,5 @@ public class DesktopLauncher {
 		config.resizable = true;
 		config.width = 1600;
 		config.height = 900;
-		//config.fullscreen = true;
-		//config.foregroundFPS = 60; 60 FPS podemos dar a opção de frames por segundo no menu inicial alterando este val
 	}
 }

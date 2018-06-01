@@ -235,8 +235,12 @@ public class SwapImageClick {
         if(valid){
             if(!t.mobile) {
                 t.g = new GameState();
+                t.speed = 1f;
                 if (t.krayZBlox) t.g.setMode('K');
                 if (t.escapeTheMatrix) t.g.setMode('E');
+
+                if (t.sprint) t.g.setEnd('S');
+                if (t.time) t.g.setEnd('T');
 
                 t.setScreen(new MGSDesktop(t));
             }
