@@ -40,7 +40,7 @@ public class GameState {
             int x = randomno.nextInt(100);
             if (x > 20){
                 x = randomno.nextInt(11);
-                /*switch (x){
+                switch (x){
                     case 0:
                         return 'T'; // NEXT 5 TETROMINOES ARE T-SHAPED
                     case 1:
@@ -65,8 +65,7 @@ public class GameState {
                         return 'K'; // SHIFTS THE PLACED BLOCKS TO THE LEFT AND DOWN, FILLING THE SPACES AND BREAKING LINES
                     default:
                         break;
-                }*/
-                return 'K';
+                }
             }
         }
 
