@@ -261,5 +261,11 @@ public class GameState {
     public int getScore(){
         return this.score;
     }
+    public Tetromino getNextTetromino(){
+        return next.get(0);
+    }
 
+    public Tetromino getHold() {
+        return hold;
+    }
 }

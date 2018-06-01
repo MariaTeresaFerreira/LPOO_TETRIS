@@ -243,16 +243,6 @@ public class MainGameScreen implements Screen{
 
     }
 
-    public void drawHold(){
-        t.batch.begin();
-        t.batch.draw(holdNextBox, 150, 430, blockSize * 4, blockSize * 4);
-        t.batch.draw(holdNextBox, 150, 130, blockSize * 4, blockSize * 4);
-        t.batch.draw(holdText, 150, 600, blockSize * 4, blockSize * 2);
-        t.batch.draw(nextText, 150, 300, blockSize * 4, blockSize * 2);
-
-        t.batch.end();
-    }
-
     public void clearLinesScore(){
         int noOfLines = 0;
         int pointsAdded = 0;
@@ -280,6 +270,161 @@ public class MainGameScreen implements Screen{
 
     }
 
+    public void drawHoldAndNext(){
+
+        t.batch.begin();
+        t.batch.draw(holdNextBox, 150, 430, blockSize * 4, blockSize * 4);
+        t.batch.draw(holdNextBox, 150, 130, blockSize * 4, blockSize * 4);
+        t.batch.draw(holdText, 150, 600, blockSize * 4, blockSize * 2);
+        t.batch.draw(nextText, 150, 300, blockSize * 4, blockSize * 2);
+        t.batch.end();
+
+        drawNHTetrominos(t.g.getNextTetromino(), true);
+
+        if(t.g.getHold() != null){
+            drawNHTetrominos(t.g.getHold(), false);
+        }
+    }
+
+    public void drawNHTetrominos(Tetromino tetro, boolean isNext){
+
+        Coords holdCoords = new Coords(175, 480);
+        Coords nextCoords = new Coords(175, 170);
+
+        int blockSide = 40;
+
+        Texture darkBlue = new Texture("darkBlueBlock.png");
+        Texture lightBlue = new Texture("lightBlueBlock.png");
+        Texture purple = new Texture("purpleBlock.png");
+        Texture orange = new Texture("orangeBlock.png");
+        Texture red = new Texture("redBlock.png");
+        Texture green = new Texture("greenBlock.png");
+        Texture yellow = new Texture("yellowBlock.png");
+
+        t.batch.begin();
+
+
+        switch(tetro.getShape().charAt(0)){
+
+            case 'I':
+                if(isNext){
+
+                    for(int i = 0; i < 4; i++){
+                        t.batch.draw(lightBlue, nextCoords.X() + i * 35 - 10, nextCoords.Y() + 20, 35, 35);
+                    }
+                }else {
+                    for(int i = 0; i < 4; i++){
+                        t.batch.draw(lightBlue, holdCoords.X() + i * 35 - 10, holdCoords.Y() + 20, 35, 35);
+                    }
+                }
+                break;
+
+            case 'T':
+                if(isNext){
+                    t.batch.draw(purple, nextCoords.X(), nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(purple, nextCoords.X() + blockSide, nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(purple, nextCoords.X() + 2 * blockSide, nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(purple, nextCoords.X() + blockSide, nextCoords.Y() + blockSide, blockSide, blockSide);
+
+                } else {
+                    t.batch.draw(purple, holdCoords.X(), holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(purple, holdCoords.X() + blockSide, holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(purple, holdCoords.X() + 2 * blockSide, holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(purple, holdCoords.X() + blockSide, holdCoords.Y() + blockSide, blockSide, blockSide);
+                }
+                break;
+
+            case 'S':
+
+                if(isNext){
+                    t.batch.draw(green, nextCoords.X(), nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(green, nextCoords.X() + blockSide, nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(green, nextCoords.X() + blockSide, nextCoords.Y() + blockSide, blockSide, blockSide);
+                    t.batch.draw(green, nextCoords.X() + 2 * blockSide, nextCoords.Y() + blockSide, blockSide, blockSide);
+
+                } else {
+                    t.batch.draw(green, holdCoords.X(), holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(green, holdCoords.X() + blockSide, holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(green, holdCoords.X() + blockSide, holdCoords.Y() + blockSide, blockSide, blockSide);
+                    t.batch.draw(green, holdCoords.X() + 2 * blockSide, holdCoords.Y() + blockSide, blockSide, blockSide);
+
+                }
+
+
+                break;
+            case 'Z':
+
+                if(isNext){
+                    t.batch.draw(red, nextCoords.X(), nextCoords.Y() + blockSide, blockSide, blockSide);
+                    t.batch.draw(red, nextCoords.X() + blockSide, nextCoords.Y() + blockSide, blockSide, blockSide);
+                    t.batch.draw(red, nextCoords.X() + blockSide, nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(red, nextCoords.X() + 2 * blockSide, nextCoords.Y(), blockSide, blockSide);
+
+                } else {
+                    t.batch.draw(red, holdCoords.X(), holdCoords.Y() + blockSide, blockSide, blockSide);
+                    t.batch.draw(red, holdCoords.X() + blockSide, holdCoords.Y() + blockSide, blockSide, blockSide);
+                    t.batch.draw(red, holdCoords.X() + blockSide, holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(red, holdCoords.X() + 2 * blockSide, holdCoords.Y(), blockSide, blockSide);
+                }
+                break;
+
+            case 'L':
+
+                if(isNext){
+                    t.batch.draw(orange, nextCoords.X(), nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(orange, nextCoords.X() + blockSide, nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(orange, nextCoords.X() + 2 * blockSide, nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(orange, nextCoords.X() + 2 * blockSide, nextCoords.Y() + blockSide, blockSide, blockSide);
+                } else {
+                    t.batch.draw(orange, holdCoords.X(), holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(orange, holdCoords.X() + blockSide, holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(orange, holdCoords.X() + 2 * blockSide, holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(orange, holdCoords.X() + 2 * blockSide, holdCoords.Y() + blockSide, blockSide, blockSide);
+                }
+                break;
+
+            case 'J':
+
+                if(isNext){
+                    t.batch.draw(darkBlue, nextCoords.X(), nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(darkBlue, nextCoords.X(), nextCoords.Y() + blockSide, blockSide, blockSide);
+                    t.batch.draw(darkBlue, nextCoords.X() + blockSide, nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(darkBlue, nextCoords.X() + 2 * blockSide, nextCoords.Y(), blockSide, blockSide);
+                } else {
+                    t.batch.draw(darkBlue, holdCoords.X(), holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(darkBlue, holdCoords.X(), holdCoords.Y() + blockSide, blockSide, blockSide);
+                    t.batch.draw(darkBlue, holdCoords.X() + blockSide, holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(darkBlue, holdCoords.X() + 2 * blockSide, holdCoords.Y(), blockSide, blockSide);
+                }
+                break;
+
+            case 'O':
+
+                if(isNext){
+                    t.batch.draw(yellow, 20 + nextCoords.X(), nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(yellow, 20 +  nextCoords.X() + blockSide, nextCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(yellow, 20 +  nextCoords.X(), nextCoords.Y() + blockSide, blockSide, blockSide);
+                    t.batch.draw(yellow, 20 +  nextCoords.X() + blockSide, nextCoords.Y() + blockSide, blockSide, blockSide);
+                } else {
+                    t.batch.draw(yellow, 20 + holdCoords.X(), holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(yellow, 20 +  holdCoords.X() + blockSide, holdCoords.Y(), blockSide, blockSide);
+                    t.batch.draw(yellow, 20 +  holdCoords.X(), holdCoords.Y() + blockSide, blockSide, blockSide);
+                    t.batch.draw(yellow, 20 +  holdCoords.X() + blockSide, holdCoords.Y() + blockSide, blockSide, blockSide);
+
+                }
+
+
+
+                break;
+            default:
+                break;
+
+        }
+
+        t.batch.end();
+    }
+
+
     @Override
     public void dispose() {
 
@@ -301,13 +446,11 @@ public class MainGameScreen implements Screen{
         drawTetromino(t.g.getCurr());
         drawPlayingField();
         drawPlaced();
-        drawHold();
+        drawHoldAndNext();
         if (t.g.defeat()){
             this.dispose();
             t.setScreen(new GameOverScreen(t));
         }
-
-        System.out.println(t.g.getScore());
         //t.batch.end();
     }
 
