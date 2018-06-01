@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 
+
 public class GameState {
 
     private Tetromino curr;
@@ -16,6 +17,7 @@ public class GameState {
     public Float effectTimer;
     private char mode;// C ---> Classic, K ---> Kray-Z Blox, E ---> Escape The Matrix
     private int score;
+    private Boolean toSlide;
 
     private int maxX = 10;
 
@@ -27,6 +29,7 @@ public class GameState {
         this.activeEffect = 'N';
         this.effectTimer = 0.0f;
         score = 0;
+        toSlide = false;
     }
 
     public void setMode(char mode){
@@ -40,7 +43,7 @@ public class GameState {
             int x = randomno.nextInt(100);
             if (x > 20){
                 x = randomno.nextInt(11);
-                switch (x){
+               /* switch (x){
                     case 0:
                         return 'T'; // NEXT 5 TETROMINOES ARE T-SHAPED
                     case 1:
@@ -65,7 +68,8 @@ public class GameState {
                         return 'K'; // SHIFTS THE PLACED BLOCKS TO THE LEFT AND DOWN, FILLING THE SPACES AND BREAKING LINES
                     default:
                         break;
-                }
+                }*/
+               return 'K';
             }
         }
 
@@ -230,19 +234,21 @@ public class GameState {
         Block c = new Block(b);
         if (b.getCoords().X() == 0) return false;
         c.setCoords(c.getCoords().X() - 1, c.getCoords().Y());
-        while(i < placed.size()){
-            if (placed.get(i).getCoords().equals(c)) return false;
-            i++;
+        for(Block e: placed){
+            if (e.getCoords().equals(c.getCoords())) {
+                return false;
+            }
         }
         return true;
     }
 
     public void shiftPlacedLeft(){
-        for (Block b: placed){
-            while(canSlideLeft(b)){
+        for (Block b: placed) {
+            while (canSlideLeft(b)) {
                 b.setCoords(b.getCoords().X() - 1, b.getCoords().Y());
             }
         }
+        toSlide = false;
     }
 
     public void activatePower(char power){
@@ -279,9 +285,6 @@ public class GameState {
             case 'R':
                 activeEffect = 'R';
                 effectTimer = 10f;
-                break;
-            case 'K':
-                //shiftPlacedLeft();
                 break;
             default:
                 break;
@@ -427,5 +430,98 @@ public class GameState {
 
     public Tetromino getHold() {
         return hold;
+    }
+
+
+
+    public int findLine(){
+
+
+        for(int i = 0; i < 15; i++){
+
+            if(lines[i] == 10){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public  boolean getToSlide(){
+        return toSlide;
+    }
+
+    public int deleteLine(){
+
+        LinkedList <Block> newBlockList = new LinkedList<Block>();
+
+        int line = findLine();
+
+        if(line == -1){
+            return -1;
+        }
+
+        for(Block b: placed){
+            if(b.getCoords().Y() > line){
+                newBlockList.add(b);
+            }else if (b.getCoords().Y() < line){
+                Block c = new Block (new Coords(b.getCoords().X(), b.getCoords().Y() + 1), b.getColour(), b.getPower());
+                newBlockList.add(c);
+            } else {
+                if (b.getPower() == 'K') {
+                    toSlide = true;
+                }
+                activatePower(b.getPower());
+            }
+        }
+
+        setPlaced(newBlockList);
+
+
+        int[] newList = new int[15];
+
+
+        for(int i = 0; i <= line; i++){
+            if (i == 0){
+                newList[0] = 0;
+            } else {
+                newList[i] = lines[i - 1];
+            }
+        }
+        for (int j = line + 1; j < 15; j ++){
+            newList[j] = lines[j];
+        }
+
+        setLines(newList);
+
+        return 0;
+
+    }
+
+    public void clearLinesScore(){
+        int noOfLines = 0;
+        int pointsAdded = 0;
+        while(deleteLine() != -1){
+            noOfLines ++;
+        }
+
+        switch (noOfLines){
+            case 1:
+                pointsAdded = 100;
+                break;
+            case 2:
+                pointsAdded = 250;
+                break;
+            case 3:
+                pointsAdded = 500;
+                break;
+            case 4:
+                pointsAdded = 1000;
+                break;
+            default:
+                break;
+        }
+
+        incrementScore(pointsAdded);
+
     }
 }

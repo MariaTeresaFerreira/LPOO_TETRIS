@@ -192,89 +192,6 @@ public class MainGameScreen implements Screen{
     }
 
 
-    public int findLine(){
-
-
-        for(int i = 0; i < 15; i++){
-
-            if(t.g.getLines()[i] == 10){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public int deleteLine(){
-
-        LinkedList <Block> newBlockList = new LinkedList<Block>();
-
-        int line = findLine();
-
-        if(line == -1){
-            return -1;
-        }
-
-        for(Block b: t.g.getPlaced()){
-            if(b.getCoords().Y() > line){
-                newBlockList.add(b);
-            }else if (b.getCoords().Y() < line){
-                Block c = new Block (new Coords(b.getCoords().X(), b.getCoords().Y() + 1), b.getColour(), b.getPower());
-                newBlockList.add(c);
-            } else {
-                t.g.activatePower(b.getPower());
-            }
-        }
-
-        t.g.setPlaced(newBlockList);
-
-
-        int[] newList = new int[15];
-
-
-        for(int i = 0; i <= line; i++){
-            if (i == 0){
-                newList[0] = 0;
-            } else {
-                newList[i] = t.g.getLines()[i - 1];
-            }
-        }
-        for (int j = line + 1; j < 15; j ++){
-            newList[j] = t.g.getLines()[j];
-        }
-
-        t.g.setLines(newList);
-
-        return 0;
-
-    }
-
-    public void clearLinesScore(){
-        int noOfLines = 0;
-        int pointsAdded = 0;
-        while(deleteLine() != -1){
-            noOfLines ++;
-        }
-        switch (noOfLines){
-            case 1:
-                pointsAdded = 100;
-                break;
-            case 2:
-                pointsAdded = 250;
-                break;
-            case 3:
-                pointsAdded = 500;
-                break;
-            case 4:
-                pointsAdded = 1000;
-                break;
-            default:
-                break;
-        }
-
-        t.g.incrementScore(pointsAdded);
-
-    }
-
     public void drawHoldAndNext(){
 
         t.batch.begin();
@@ -465,7 +382,18 @@ public class MainGameScreen implements Screen{
         t.batch.draw(background, 0, 0);
         t.batch.end();
         stage.draw();
-        clearLinesScore();
+        t.g.clearLinesScore();
+        if (t.g.getToSlide()){
+            System.out.println("Was: ");
+            for(Block b: t.g.getPlaced()){
+                System.out.println(b);
+            }
+            t.g.shiftPlacedLeft();
+            System.out.println("Is: ");
+            for(Block b: t.g.getPlaced()){
+                System.out.println(b);
+            }
+        }
         drawTetromino(t.g.getCurr());
         drawPlayingField();
         drawPlaced();
