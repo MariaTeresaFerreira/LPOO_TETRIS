@@ -6,18 +6,32 @@ import com.mygdx.mainpackage.Tetris;
 
 public class MGSAndroid extends MainGameScreen {
 
+
+    private float timeToMove;
+    private float movespeed;
+
     public MGSAndroid(final Tetris t){
+
         super(t);
+        timeToMove = 0;
+        movespeed = 0.25f;
     }
 
     @Override
     public void render(float delta){
-        if (Gdx.input.getGyroscopeX() >= 0.0872665){
-            t.g.shiftLeft();
-        }
+        timeToMove += Gdx.graphics.getDeltaTime();
+        if (timeToMove >= movespeed) {
+            if (Gdx.input.getAccelerometerY() >= 5) {
+                t.g.shiftRight();
+            }
 
-        if (Gdx.input.getAccelerometerX() <= -0.0872665){
-            t.g.shiftRight();
+            if (Gdx.input.getAccelerometerY() <= -5) {
+                t.g.shiftLeft();
+            }
+
+            if (Gdx.input.getAccelerometerX() >= 5) {
+                t.g.drop();
+            }
         }
 
         super.render(delta);

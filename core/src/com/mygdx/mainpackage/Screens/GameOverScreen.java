@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.mainpackage.Coords;
 import com.mygdx.mainpackage.GameState;
 import com.mygdx.mainpackage.Tetris;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class GameOverScreen implements Screen{
 
     private Texture background = new Texture("background2.png");
+    private Texture gameOver = new Texture("GameOver.png");
 
     private Sprite mainMenuSprite = new Sprite(new Texture("MainMenuButton.png"));
     private Sprite exitSprite = new Sprite(new Texture("exitButton.png"));
@@ -37,6 +39,9 @@ public class GameOverScreen implements Screen{
     private Texture eight = new Texture("numbers/8.png");
     private Texture nine = new Texture("numbers/9.png");
 
+    private Coords coords = new Coords(Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight() * (float)0.75);
+    private int numSide = 200;
+
 
 
     public GameOverScreen(Tetris t){
@@ -46,12 +51,12 @@ public class GameOverScreen implements Screen{
         exitSprite.setSize((float) (Gdx.graphics.getWidth()*0.09375), (float) (Gdx.graphics.getHeight()*0.0834));
         exitButton = new Button(new SpriteDrawable(exitSprite));
         exitButton.setX(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2);
-        exitButton.setY(Gdx.graphics.getHeight()/2 - exitButton.getHeight()/2 - exitButton.getHeight() * (float) 1.5);
+        exitButton.setY(Gdx.graphics.getHeight()/2 - exitButton.getHeight()/2 - exitButton.getHeight() * (float) 1.5 - 2*exitButton.getHeight());
 
         mainMenuSprite.setSize((float) (Gdx.graphics.getWidth()*0.09375), (float) (Gdx.graphics.getHeight()*0.0834));
         mainMenuButton = new Button(new SpriteDrawable(mainMenuSprite));
         mainMenuButton.setX(Gdx.graphics.getWidth()/2 - mainMenuButton.getWidth()/2);
-        mainMenuButton.setY(Gdx.graphics.getHeight()/2 - mainMenuButton.getHeight()/2);
+        mainMenuButton.setY(Gdx.graphics.getHeight()/2 - mainMenuButton.getHeight()/2 - 2 * mainMenuButton.getHeight());
 
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), t.batch);
         stage.addActor(exitButton);
@@ -61,6 +66,12 @@ public class GameOverScreen implements Screen{
     }
 
     public void drawScore(){
+
+        int score = t.g.getScore();
+
+        t.batch.begin();
+        t.batch.draw(zero, coords.X(), coords.Y(), numSide, numSide);
+        t.batch.end();
 
 
 
@@ -76,8 +87,11 @@ public class GameOverScreen implements Screen{
 
         t.batch.begin();
         t.batch.draw(background, 0, 0);
+        t.batch.draw(gameOver, coords.X() + 100, coords.Y() + 100);
         t.batch.end();
         stage.draw();
+
+        drawScore();
 
         if (exitButton.isPressed()){
             Gdx.app.exit();
@@ -112,6 +126,6 @@ public class GameOverScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 }
