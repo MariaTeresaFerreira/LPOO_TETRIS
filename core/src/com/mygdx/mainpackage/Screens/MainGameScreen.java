@@ -8,13 +8,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.mainpackage.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 
 
 public class MainGameScreen implements Screen{
@@ -80,12 +78,11 @@ public class MainGameScreen implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y){
                 SwapImageClick.mute(t, muteSprite);
+                System.out.println("AAA");
             }
         });
-
         stage.addActor(muteButton);
         Gdx.input.setInputProcessor(stage);
-
 
     }
 

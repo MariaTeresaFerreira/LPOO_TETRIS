@@ -42,7 +42,7 @@ public class Tetris extends Game {
 		speed = (float) 1;
 
 		sound = true;
-		music = Gdx.audio.newMusic(Gdx.files.internal("Tetris.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("Mafiosa.mp3"));
 		music.setLooping(true);
 		music.setVolume(1);
 		music.play();
