@@ -39,8 +39,9 @@ public class GameOverScreen implements Screen{
     private Texture eight = new Texture("numbers/8.png");
     private Texture nine = new Texture("numbers/9.png");
 
-    private Coords coords = new Coords(Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight() * (float)0.75);
     private int numSide = 200;
+    private Coords numberCoords = new Coords(Gdx.graphics.getWidth()/2-((float)2.5*numSide), Gdx.graphics.getHeight() * (float)0.42);
+    private int[] scoreArray = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 
 
@@ -67,15 +68,79 @@ public class GameOverScreen implements Screen{
 
     public void drawScore(){
 
-        int score = t.g.getScore();
+        //System.out.println(t.g.getScore());
 
-        t.batch.begin();
-        t.batch.draw(zero, coords.X(), coords.Y(), numSide, numSide);
-        t.batch.end();
+        int score = t.g.getScore();
+        setScoreArrayValues(score);
 
 
 
     }
+
+    public void setScoreArrayValues(Integer s){
+
+        String score = s.toString();
+
+        for(int i = 0; i < score.length(); i++){
+            scoreArray[8 - i] = Character.getNumericValue((int) score.charAt(score.length() - 1 - i));
+        }
+
+
+        for(int i = 0; i < 9; i++){
+            printNumber(i, scoreArray[i]); // VE ESTA PARTE
+        }
+
+        //System.out.println("Depois");
+        for(int i = 0; i < 9; i++){
+            //System.out.print(scoreArray[i]);
+        }
+        //System.out.println();
+    }
+
+    public void printNumber(int pos, int num){
+
+        Texture tex;
+
+        switch(num){
+            case 0:
+                tex = zero;
+                break;
+            case 1:
+                tex = one;
+                break;
+            case 2:
+                tex = two;
+                break;
+            case 3:
+                tex = three;
+                break;
+            case 4:
+                tex = four;
+                break;
+            case 5:
+                tex = five;
+                break;
+            case 6:
+                tex = six;
+                break;
+            case 7:
+                tex = seven;
+                break;
+            case 8:
+                tex = eight;
+                break;
+            case 9:
+                tex = nine;
+                break;
+            default:
+                tex = one;
+                break;
+        }
+        t.batch.begin();
+        t.batch.draw(tex, numberCoords.X() + pos * numSide *(float)0.5, numberCoords.Y(), numSide, numSide);
+        t.batch.end();
+    }
+
 
     @Override
     public void dispose() {
@@ -87,7 +152,7 @@ public class GameOverScreen implements Screen{
 
         t.batch.begin();
         t.batch.draw(background, 0, 0);
-        t.batch.draw(gameOver, coords.X() + 100, coords.Y() + 100);
+        t.batch.draw(gameOver, numberCoords.X() + 100, numberCoords.Y() + 170, 800, 300);
         t.batch.end();
         stage.draw();
 
