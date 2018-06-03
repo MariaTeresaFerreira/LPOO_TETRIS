@@ -8,6 +8,11 @@ import com.mygdx.mainpackage.Tetris;
 
 public class MGSDesktop extends MainGameScreen {
 
+    /**
+     * Main game screen android specifically for desktop
+     * Handles keyboard input to control the current tetromino
+     * @param t
+     */
     public MGSDesktop(final Tetris t){
         super(t);
         stage.addListener( new InputListener(){

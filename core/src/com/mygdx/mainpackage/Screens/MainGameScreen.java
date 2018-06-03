@@ -17,36 +17,107 @@ import java.util.HashMap;
 
 public class MainGameScreen implements Screen{
 
+    /**
+     * Main game screen's stage
+     */
     protected Stage stage;
+    /**
+     * Main screen Tetris object
+     */
     protected Tetris t;
+    /**
+     * Background texture
+     */
     protected Texture background= new Texture("background2.png");
+    /**
+     * Hold and next tetromino's box texture
+     */
     protected Texture holdNextBox = new Texture("HoldNextBox.png");
+    /**
+     * Hold text texture
+     */
     protected Texture holdText = new Texture("hold.png");
+    /**
+     * Next text texture
+     */
     protected Texture nextText = new Texture("next.png");
-    protected Texture scoreText = new Texture("score.png");
+    /**
+     * Music mute sprite
+     */
     protected Sprite muteSprite = new Sprite (new Texture("sound.png"));
     boolean timeDispTetros = false;
 
+    /**
+     * Dark blue block texture
+     */
     Texture darkBlue = new Texture("darkBlueBlock.png");
+    /**
+     * Light blue block texture
+     */
     Texture lightBlue = new Texture("lightBlueBlock.png");
+    /**
+     * Purple block texture
+     */
     Texture purple = new Texture("purpleBlock.png");
+    /**
+     * Orange block texture
+     */
     Texture orange = new Texture("orangeBlock.png");
+    /**
+     * REd block texture
+     */
     Texture red = new Texture("redBlock.png");
+    /**
+     * Green block texture
+     */
     Texture green = new Texture("greenBlock.png");
+    /**
+     * Yellow block texture
+     */
     Texture yellow = new Texture("yellowBlock.png");
+    /**
+     * Kray-Z block question mark (?) texture
+     */
     Texture krayZ = new Texture("krayZBlox.png");
+    /**
+     * Gray wall block texture
+     */
     Texture wall = new Texture("wallBlock.png");
 
+    /**
+     * Hash map to store and index the colour block textures by strings
+     */
     protected HashMap<String, Sprite> spriteMap = new HashMap<String, Sprite>();
 
+    /**
+     * Relative to screen size side block size (resizable blocks)
+     */
     protected static final float blockSize = (float) (Gdx.graphics.getHeight() * (0.056));
+    /**
+     * X displacement for drawing the blocks inside the game's playing field
+     */
     protected static final float displacementX = 10*blockSize;
+    /**
+     * Y displacement for drawing the blocks inside the game's playing field
+     */
     protected static final float displacementY = (float) (Gdx.graphics.getHeight() - 3*blockSize);
 
+    /**
+     * Variable to handle the time during the games
+     */
     protected float time;
 
+    /**
+     * Music mute button
+     */
     protected Button muteButton = new Button(new SpriteDrawable(muteSprite));
 
+    /**
+     * Main game screen constructor
+     * Hash map is filled with the necessary information regarding the blocks and their colours
+     * Mute button is handled using a listener and an overridden clicked function
+     * @param t
+     */
     public MainGameScreen(final Tetris t){
 
         this.t = t;
@@ -87,11 +158,24 @@ public class MainGameScreen implements Screen{
 
     }
 
+    /**
+     * This function receives a block and from it's internal coordinates, generates de coordinates for the game's playing
+     * field
+     * @param b
+     * @return Coords (regarding the game's playing field instead of the generic coordinates)
+     */
     public Coords genScreenCoords(Block b){
         Coords c = new Coords(displacementX + b.getCoords().X() * blockSize,
                 displacementY - b.getCoords().Y()*blockSize + blockSize);
         return c;
     }
+
+
+    /**
+     * Receives a block and checks if it's coordinates are valid regarding the limits of the game's playing field
+     * @param b
+     * @return true if the coordinates are valid, false otherwise
+     */
     public boolean validScreenCoordsBlock(Block b){
 
         Coords c = genScreenCoords(b);
@@ -105,6 +189,10 @@ public class MainGameScreen implements Screen{
         return false;
     }
 
+    /**
+     * This function handles each block present in the placed linked list and draws them after checking their
+     * coordinate's validity
+     */
     public void drawPlaced(){
         t.batch.begin();
         for(Block b: t.g.getPlaced()){
@@ -120,6 +208,11 @@ public class MainGameScreen implements Screen{
         t.batch.end();
     }
 
+
+    /**
+     * This function draws the tetromino passed as tetrom if all the coordinates are valid
+     * @param tetrom
+     */
     public void drawTetromino(Tetromino tetrom){
 
         Block a = tetrom.getBlocks().get("A");
@@ -169,6 +262,9 @@ public class MainGameScreen implements Screen{
 
     }
 
+    /**
+     * This function draws the limits os the game's playing field
+     */
     public void drawPlayingField(){
         int i, j;
         t.batch.begin();
@@ -189,6 +285,10 @@ public class MainGameScreen implements Screen{
     }
 
 
+    /**
+     * This function draws both the next and hold boxes and text textures
+     * The function that draws the hold and next tetrominos is called
+     */
     public void drawHoldAndNext(){
 
         t.batch.begin();
@@ -205,6 +305,11 @@ public class MainGameScreen implements Screen{
         }
     }
 
+    /**
+     * This function draws the hold and next tetrominos in their specific places
+     * @param tetro
+     * @param isNext
+     */
     public void drawNHTetrominos(Tetromino tetro, boolean isNext){
 
         Coords holdCoords = new Coords(175, 480);
@@ -341,6 +446,11 @@ public class MainGameScreen implements Screen{
 
     }
 
+    /**
+     * Draws all the necessary parts on the screen, them being the background, the game's borders and tetrominos
+     * Handles the times of the game, considering the different game modes
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         time += Gdx.graphics.getDeltaTime();
@@ -439,6 +549,11 @@ public class MainGameScreen implements Screen{
 
     }
 
+    /**
+     * This function updates the screen size, keeping the proportions
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height);

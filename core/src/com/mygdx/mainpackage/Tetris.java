@@ -47,7 +47,7 @@ public class Tetris extends Game {
 		* */
 		g.setMode('E');
 
-		this.setScreen(new  ETMDScreen(this, 0.4f)/*new MainMenuScreen(this)*/);
+		this.setScreen(new MainMenuScreen(this));
 		tToIncreaseSpeed = (float) 0;
 		speed = (float) 1;
 

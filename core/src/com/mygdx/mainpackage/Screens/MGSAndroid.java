@@ -22,8 +22,11 @@ public class MGSAndroid extends MainGameScreen {
     private Button hardDropButton;
 
 
-
-
+    /**
+     * Main game screen android specifically for android
+     * Buttons for rotate (R), hold (H), and hard drop (H)
+     * @param t
+     */
     public MGSAndroid(final Tetris t){
 
         super(t);
@@ -60,7 +63,11 @@ public class MGSAndroid extends MainGameScreen {
         stage.addActor(holdButton);
 
     }
-
+    /**
+     * Draws all the necessary parts on the screen
+     * Handles the accelerometer input to control the current tetromino
+     * @param delta
+     */
     @Override
     public void render(float delta){
         timeToMove += Gdx.graphics.getDeltaTime();

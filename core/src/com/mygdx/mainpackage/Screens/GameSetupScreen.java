@@ -15,48 +15,156 @@ import com.mygdx.mainpackage.Tetris;
 
 public class GameSetupScreen implements Screen{
 
+    /**
+     * Game setup screen Tetris object
+     */
     private Tetris t;
+    /**
+     * Background texture
+     */
     private Texture background;
 
+    /**
+     * Game setup screen's viewport
+     */
     private Viewport vp;
+    /**
+     * Game setup information screen's stage
+     */
     private Stage stage;
 
+    /**
+     * Back sprite
+     */
     private Sprite backSprite;
+    /**
+     * Back button
+     */
     private Button backButton;
 
+    /**
+     * Game mode information (i) sprite
+     */
     private Sprite infoSprite;
+    /**
+     * Game mode information button
+     */
     private Button infoButton;
 
+    /**
+     * Forward sprite
+     */
     private Sprite forwardSprite;
+    /**
+     * Forward button
+     */
     private Button forwardButton;
 
+    /**
+     * Unchecked texture for the mode's checkbox buttons
+     */
     private Texture unchecked;
-    private Texture checked;
 
+
+
+    /**
+     * Classic mode sprite
+     */
     private Sprite classicSprite;
+    /**
+     * Classic mode button
+     */
     private Button classicButton;
+    /**
+     * Kray-Z Blox mode sprite
+     */
     private Sprite krayZBloxSprite;
+    /**
+     * Kray-Z Blox mode Button
+     */
     private Button krayZBloxButton;
+    /**
+     * Escape the matrix mode sprite
+     */
     private Sprite escapeTheMatrixSprite;
+    /**
+     * Escape the matrix mode button
+     */
     private Button escapeTheMatrixButton;
+    /**
+     * Sprint mode sprite
+     */
     private Sprite sprintSprite;
+    /**
+     * Sprint mode button
+     */
     private Button sprintButton;
+    /**
+     * Marathon mode sprite
+     */
     private Sprite marathonSprite;
+    /**
+     * Marathon mode button
+     */
     private Button marathonButton;
+    /**
+     * Time mode sprite
+     */
     private Sprite timeSprite;
+    /**
+     * Time mode button
+     */
     private Button timeButton;
+    /**
+     * Single player mode sprite
+     */
     private Sprite singleplayerSprite;
+    /**
+     * Single player mode button
+     */
     private Button singleplayerButton;
+    /**
+     * Create multi player mode sprite
+     */
     private Sprite createMultiplayerSprite;
+    /**
+     * Create multi player mode button
+     */
     private Button createMultiplayerButton;
+    /**
+     * Join multi player mode sprite
+     */
     private Sprite joinMultiplayerSprite;
+    /**
+     * Join multi player mode button
+     */
     private Button joinMultiplayerButton;
 
+    /**
+     * Game mode selector layout sprite
+     */
     private Sprite text;
 
+    /**
+     * Game setup information screen's width
+     */
     public static final float SCREEN_WIDTH = 1600;
+    /**
+     * Game setup information screen's height
+     */
     public static final float SCREEN_HEIGHT = 900;
 
+
+    /**
+     * Game setup screen constructor
+     * All the mode's checkboxes are added to the stage after being formatted accordingly to the layout sprite
+     * Click listeners are added to all the buttons and the buttons regarding each part of the game setup are exclusive,
+     * this is, only one box can be selected for each row
+     * The escape the matrix mode is only compatible with the time and single player modes, so if the player tries to
+     * start the game with non compatible setting regarding the escape the matrix mode, this box will automatically deselected
+     * The user can only start a game after there are all the needed modes chosen
+     * @param t
+     */
     public GameSetupScreen(final Tetris t){
         this.t = t;
         background = new Texture("background2.png");
@@ -219,6 +327,13 @@ public class GameSetupScreen implements Screen{
     public void dispose() {
     }
 
+    /**
+     * Draws all the necessary parts on the screen, them being the background, the game mode layout and all the objects
+     * added to the screen's stage
+     * information sprite
+     * Checks if the back button or the info button have been pressed
+     * @param delta
+     */
     @Override
     public void render(float delta) {
 
@@ -261,6 +376,11 @@ public class GameSetupScreen implements Screen{
 
     }
 
+    /**
+     * This function updates the screen size, keeping the proportions
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
 

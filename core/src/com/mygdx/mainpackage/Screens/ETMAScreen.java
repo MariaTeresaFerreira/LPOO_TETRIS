@@ -17,14 +17,14 @@ import com.mygdx.mainpackage.Tetromino;
 
 import java.util.LinkedList;
 
-public class ETMDScreen extends MainGameScreen {
+public class ETMAScreen extends MainGameScreen {
 
     private Dood dood;
     private Body curr1;
     private Body curr2;
     private World world;
 
-    public ETMDScreen(final Tetris t, float speed){
+    public ETMAScreen(final Tetris t, float speed){
         super(t);
         world = new World(new Vector2(0, -9.8f - 1/speed), true);
         t.speed = speed;
@@ -41,6 +41,7 @@ public class ETMDScreen extends MainGameScreen {
         float limSupX = genScreenCoords(t.g.getCurr().getBlocks().get("B")).X() + blockSize;
         float limInfY = genScreenCoords(t.g.getCurr().getBlocks().get("A")).Y() - blockSize;
         float limSupY = genScreenCoords(t.g.getCurr().getBlocks().get("D")).X();
+
         if (dood.getCoords().X() >= limInfX && dood.getCoords().X() <= limSupX
                 && dood.getCoords().Y() >= limInfY && dood.getCoords().Y() <= limSupY) {
             return true;
@@ -63,12 +64,7 @@ public class ETMDScreen extends MainGameScreen {
     }
 
     public void upDoot(){
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            if (dood.getCoords().X() > displacementX) dood.setCoords(new Coords(dood.getCoords().X() - 2, dood.getCoords().Y()));
-
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            if (dood.getCoords().X() < Gdx.graphics.getWidth() - displacementX) dood.setCoords(new Coords(dood.getCoords().X() + 2, dood.getCoords().Y()));
-        }
+        if (dood.getCoords().X() > displacementX && dood.getCoords().X() < Gdx.graphics.getWidth() - displacementX ) dood.setCoords(new Coords(dood.getCoords().X() + Gdx.input.getAccelerometerX(), dood.getCoords().Y()));
     }
 
     public boolean reachedBottom(){

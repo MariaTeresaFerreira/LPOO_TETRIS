@@ -6,6 +6,11 @@ import com.mygdx.mainpackage.Tetris;
 
 public class SwapImageClick {
 
+    /**
+     * Handles the change of the music button between playing and mute
+     * @param t
+     * @param s
+     */
     public static void mute(Tetris t, Sprite s){
         if (t.sound == true){
             t.sound = false;
@@ -18,6 +23,15 @@ public class SwapImageClick {
         }
     }
 
+    /**
+     * Handles the selection of the game modes including the checkboxes and the booleans regarding
+     * each mode
+     * @param t
+     * @param s
+     * @param box
+     * @param s1
+     * @param s2
+     */
     public static void checked(Tetris t, Sprite s, int box, Sprite s1, Sprite s2){
 
         switch (box){
@@ -117,6 +131,13 @@ public class SwapImageClick {
 
     }
 
+    /**
+     * Handles one box being clicked regardless of the other boxes and regardless of the clicked box
+     * already being selected or not
+     * @param t
+     * @param s
+     * @param box
+     */
     private static void clickBox(Tetris t, Sprite s, int box){
         switch(box){
             case 0:
@@ -215,6 +236,12 @@ public class SwapImageClick {
         }
     }
 
+    /**
+     * Checks if when the player tries to star a game, the selected modes are compatible and all the
+     * minimum necessary setting are chosen
+     * @param t
+     * @param etmSprite
+     */
     public static void validGame(Tetris t, Sprite etmSprite){
 
         boolean valid = false;
@@ -237,7 +264,14 @@ public class SwapImageClick {
             t.speed = 1f;
 
             if (t.krayZBlox) t.g.setMode('K');
-            if (t.escapeTheMatrix) t.g.setMode('E');
+            if (t.escapeTheMatrix){
+                t.g.setMode('E');
+                if (!t.mobile){
+                    t.setScreen(new ETMDScreen(t, 1));
+                }else{
+                    t.setScreen(new ETMAScreen(t, 1));
+                }
+            }
 
             if (t.sprint) t.g.setEnd('S');
             if (t.time) t.g.setEnd('T');
