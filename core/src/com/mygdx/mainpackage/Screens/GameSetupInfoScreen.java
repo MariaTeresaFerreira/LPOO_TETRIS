@@ -16,23 +16,54 @@ import java.awt.Checkbox;
 
 public class GameSetupInfoScreen implements Screen {
 
+    /**
+     * Game setup info screen Tetris object
+     */
     private Tetris t;
+    /**
+     * Background texture
+     */
     private Texture background;
 
+    /**
+     * Game mode information sprite
+     */
     private Sprite infoTextSprite;
-    //private Button infoTextButton;
+    /**
+     * Back sprite
+     */
     private Sprite backSprite;
+    /**
+     * Back button
+     */
     private Button backButton;
 
 
-
+    /**
+     * Game setup information screen's viewport
+     */
     private Viewport vp;
+    /**
+     * Game setup information screen's stage
+     */
     private Stage stage;
 
 
+    /**
+     * Game setup information screen's width
+     */
     public static final float SCREEN_WIDTH = 1600;
+    /**
+     * Game setup information screen's height
+     */
     public static final float SCREEN_HEIGHT = 900;
 
+    /**
+     * Game setup information screen constructor
+     * All the mode variables are turned back to false in order to reset the chosen options after the player has read
+     * the information of both the game modes and end modes
+     * @param t
+     */
     public GameSetupInfoScreen(Tetris t){
         this.t = t;
         background = new Texture("background2.png");
@@ -62,8 +93,6 @@ public class GameSetupInfoScreen implements Screen {
         t.createMultiplayer = false;
         t.joinMultiplayer = false;
 
-
-
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -73,6 +102,12 @@ public class GameSetupInfoScreen implements Screen {
 
     }
 
+    /**
+     * Draws all the necessary parts on the screen, them being the back button, the background, the game mode
+     * information sprite
+     * Checks if the back button has been pressed, and if so, a new game setup screen is set
+     * @param delta
+     */
     @Override
     public void render(float delta) {
 
@@ -111,6 +146,11 @@ public class GameSetupInfoScreen implements Screen {
 
     }
 
+    /**
+     * This function updates the screen size, keeping the proportions
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
 

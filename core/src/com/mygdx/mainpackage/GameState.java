@@ -7,23 +7,71 @@ import java.util.Random;
 
 public class GameState {
 
+    /**
+     * Current tetromino that is controlled by the player
+     */
     private Tetromino curr;
+    /**
+     * Tetromino that is currently in the hold position
+     */
     private Tetromino hold;
+    /**
+     * Boolean that tells if a current tetromino can change to the hold position
+     */
     private boolean canHold;
+    /**
+     * List of all the already placed blocks
+     */
     private LinkedList<Block> placed = new LinkedList<Block>();
+    /**
+     * List of the next tetrominos to enter the game
+     */
     private LinkedList<Tetromino> next = new LinkedList<Tetromino>();
+    /**
+     * Number of cubes per horizontal line of game
+     */
     private int[] lines = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    /**
+     * Char that stores the active effect caused by a Kra-Z Block
+     */
     private char activeEffect; // R ---> Rotation Lock, U ---> Speed Up, D ---> Speed Down, N ---> None
+    /**
+     * Times the effects that depend on time
+     */
     public Float effectTimer;
+    /**
+     * Stores the selected game mode
+     */
     private char mode;// C ---> Classic, K ---> Kray-Z Blox, E ---> Escape The Matrix
+    /**
+     * Stores the selected end mode
+     */
     private char end; //'M' ---> Marathon, 'S' ---> Sprint,  'T' ---> Time
+    /**
+     * Handles the time
+     */
     private Float timer;
+    /**
+     * Stores the current score of the game
+     */
     private int score;
+    /**
+     * Stores how many lines the player needs to complete in order to finish the sprint game mode
+     */
     private int objective;
+    /**
+     * Checks if a block can slide in the specific iteration for the slide effect cause by the Kray-Z Block
+     */
     private Boolean toSlide;
 
+    /**
+     * Maximum number of blocks simultaneously horizontal
+     */
     private int maxX = 10;
 
+    /**
+     * Game state constructor
+     */
     public GameState(){
         this.mode = 'C'; // Default
         this.end = 'M';  // Default
@@ -38,10 +86,18 @@ public class GameState {
         toSlide = false;
     }
 
+    /**
+     * Sets the game mode
+     * @param mode
+     */
     public void setMode(char mode){
         this.mode = mode;
     }
 
+    /**
+     * Sets the end mode
+     * @param endM
+     */
     public void setEnd(char endM){
         switch (endM){
             case 'S':
@@ -57,15 +113,27 @@ public class GameState {
         }
     }
 
+    /**
+     * Decrements the timer's value
+     * @param deltaTime
+     */
     public void decTimer(float deltaTime){
         timer -= deltaTime;
 
     }
 
+    /**
+     * Increments the timer's value
+     * @param deltaTime
+     */
     public void incTimer(float deltaTime){
         timer += deltaTime;
     }
 
+    /**
+     * Generates a power
+     * @return char according to the power generated
+     */
     public char genPower(){
 
         if (mode == 'K') {
@@ -105,6 +173,11 @@ public class GameState {
         return 'N';
     }
 
+    /**
+     * Generates a new tetromino
+     * @param power
+     * @return Tetromino that will be added to the next list
+     */
     public Tetromino genTetromino(char power){
         Random randomno = new Random();
         int x = randomno.nextInt(7);
@@ -127,6 +200,11 @@ public class GameState {
         }
     }
 
+    /**
+     * Generates a tetromino with a Kray-Z block
+     * @param spec
+     * @return Tetromino that will be added to the next list
+     */
     public Tetromino genSpecTetromino(char spec){
         switch (spec){
             case 'I':
@@ -147,6 +225,10 @@ public class GameState {
         }
     }
 
+    /**
+     * If possible, moves the current tetromino to the hold position, and if there is already a
+     * tetromino there, that one is placed as the current one
+     */
     public void hold(){
         if(this.canHold) {
             if (this.hold == null) {
@@ -170,10 +252,18 @@ public class GameState {
         }
     }
 
+    /**
+     * Sets the boolean that checks if a tetromino can be placed in the hold position to true
+     */
     public void canHold(){
         this.canHold = true;
     }
 
+    /**
+     * Checks if a block can be dropped
+     * @param a
+     * @return True upon success and false otherwise
+     */
     public boolean canDrop(Coords a){
 
         for (Block b: placed){
@@ -188,6 +278,10 @@ public class GameState {
         return true;
     }
 
+    /**
+     * Call the canDrop function with the current tetromino as the given argument
+     * @return True upon success and false otherwise
+     */
     public boolean canDrop(){
         if (canDrop(curr.getBlocks().get("A").getCoords()) &&
                 canDrop(curr.getBlocks().get("B").getCoords()) &&
@@ -199,6 +293,9 @@ public class GameState {
         return false;
     }
 
+    /**
+     * Locks the current tetromino in place after it can no longer go down
+     */
     public void lock(){
         placed.add(curr.getBlocks().get("A"));
         placed.add(curr.getBlocks().get("B"));
@@ -213,6 +310,9 @@ public class GameState {
         Collections.sort(placed); //Sort Block List
     }
 
+    /**
+     * Drops the current tetromino one coordinate if possible
+     */
     public void drop(){
         Coords ac = curr.getBlocks().get("A").getCoords();
         Coords bc = curr.getBlocks().get("B").getCoords();
@@ -233,6 +333,10 @@ public class GameState {
         }
     }
 
+    /**
+     * Effect that alters the next list to the same specific tetromino
+     * @param next
+     */
     public void setNext5P(char next){
         this.next.clear();
         Tetromino t1 = genSpecTetromino(next);
@@ -249,15 +353,27 @@ public class GameState {
         this.next.add(t5);
     }
 
+    /**
+     * Handles the end of an effect
+     */
     public void clearEffect(){
         this.activeEffect = 'N';
         this.effectTimer = 0f;
     }
 
+    /**
+     * Gets the effect that is currently active
+     * @return
+     */
     public char getActiveEffect(){
         return activeEffect;
     }
 
+    /**
+     * Checks if a placed block can slide left for the effect
+     * @param b
+     * @return True upon success and false otherwise
+     */
     public boolean canSlideLeft(Block b){
         int i = 0;
         Block c = new Block(b);
@@ -271,6 +387,9 @@ public class GameState {
         return true;
     }
 
+    /**
+     * This function handles the shift effect
+     */
     public void shiftPlacedLeft(){
         for (Block b: placed) {
             while (canSlideLeft(b)) {
@@ -280,6 +399,10 @@ public class GameState {
         toSlide = false;
     }
 
+    /**
+     * Activates a power
+     * @param power
+     */
     public void activatePower(char power){
         switch (power){
             case 'I':
@@ -320,6 +443,9 @@ public class GameState {
         }
     }
 
+    /**
+     * Places the current tetromino in the corresponding place it is at that moment
+     */
     public void hardDrop(){
 
         while(canDrop()){
@@ -339,6 +465,10 @@ public class GameState {
     }
 
 
+    /**
+     * Checks if it is valid for the current tetromino to shift left
+     * @return True upon success and false otherwise
+     */
     public boolean validSL(){
         Coords ac = new Coords();
         Coords bc = new Coords();
@@ -366,6 +496,9 @@ public class GameState {
 
     }
 
+    /**
+     * If it is valid, the current block will shift left
+     */
     public void shiftLeft(){
        if(validSL()){
            curr.getBlocks().get("A").getCoords().setCoords(curr.getBlocks().get("A").getCoords().X() -1,
@@ -379,6 +512,10 @@ public class GameState {
        }
     }
 
+    /**
+     * Checks if it is valid for the current tetromino to shift right
+     * @return True upon success and false otherwise
+     */
     public boolean validSR(){
 
         Coords ac = new Coords();
@@ -405,7 +542,9 @@ public class GameState {
         return true;
 
     }
-
+    /**
+     * If it is valid, the current block will shift right
+     */
     public void shiftRight(){
         if (validSR()){
             curr.getBlocks().get("A").getCoords().setCoords(curr.getBlocks().get("A").getCoords().X() +1,
@@ -419,10 +558,18 @@ public class GameState {
         }
     }
 
+    /**
+     * Gets the current tetromino
+     * @return
+     */
     public Tetromino getCurr(){
         return this.curr;
     }
 
+    /**
+     * If the top is reached, the game ends
+     * @return True if the game has reached an end situation (keeping in mind the different end modes)
+     */
     public boolean defeat(){
         for(Block b: placed){
             if(b.getCoords().Y() == 0) return true;
@@ -434,49 +581,78 @@ public class GameState {
         return false;
     }
 
+    /**
+     * Gets the list of placed blocks
+     * @return LinkedList<Block>
+     */
     public LinkedList<Block> getPlaced(){
         return this.placed;
     }
 
+    /**
+     * Adds a block to the placed list
+     * @param b
+     */
     public void setPlaced(LinkedList<Block> b){
         this.placed = b;
     }
 
-    public int[] getLines(){
-        return this.lines;
-    }
-
-    public void setLinesValue(int i, int value){
-        lines[i] = value;
-    }
-
+    /**
+     * Sets the lines array to the array passed
+     * @param nl
+     */
     public void setLines(int[] nl){
         lines = nl;
     }
 
+    /**
+     * Increments the score according to the number of lines destroyed simultaneously
+     * @param value
+     */
     public void incrementScore(int value){
         this.score += value;
         if(this.score > 999999999){
             this.score = 999999999;
         }
     }
+
+    /**
+     * Gets the current score
+     * @return score
+     */
     public int getScore(){
         return this.score;
     }
+
+    /**
+     * Gets the next tetromino
+     * @return Fist Tetromino of the next list
+     */
     public Tetromino getNextTetromino(){
         return next.get(0);
     }
 
+    /**
+     * Gets the tetromino is the hold position
+     * @return Tetromino in hold
+     */
     public Tetromino getHold() {
         return hold;
     }
 
+    /**
+     * Gets the timer
+     * @return timer
+     */
     public float getTimer(){
         return timer;
     }
 
 
-
+    /**
+     * Find the line with the higher block
+     * @return index of the line
+     */
     public int findLine(){
 
 
@@ -489,10 +665,18 @@ public class GameState {
         return -1;
     }
 
+    /**
+     * GEts to slide
+     * @return toSlide
+     */
     public  boolean getToSlide(){
         return toSlide;
     }
 
+    /**
+     * Function that handles the destruction of a full line
+     * @return -1 if there are no lines to delete
+     */
     public int deleteLine(){
 
         LinkedList <Block> newBlockList = new LinkedList<Block>();
@@ -540,6 +724,9 @@ public class GameState {
 
     }
 
+    /**
+     * Handles the point given to the act of deleting lines
+     */
     public void clearLinesScore(){
         int noOfLines = 0;
         int pointsAdded = 0;
