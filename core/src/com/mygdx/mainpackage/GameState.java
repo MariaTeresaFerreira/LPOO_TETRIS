@@ -8,6 +8,7 @@ import java.util.Random;
 public class GameState {
 
     private Tetromino curr;
+    private Tetromino curr2;
     private Tetromino hold;
     private boolean canHold;
     private LinkedList<Block> placed = new LinkedList<Block>();
@@ -21,6 +22,7 @@ public class GameState {
     private int score;
     private int objective;
     private Boolean toSlide;
+    public Integer cubeCounter;
 
     private int maxX = 10;
 
@@ -35,11 +37,37 @@ public class GameState {
         this.effectTimer = 0.0f;
         score = 0;
         objective = 0;
+        cubeCounter = 0;
         toSlide = false;
+    }
+    
+    public GameState(Tetromino t) {
+    	this.mode = 'C';
+    	this.end = 'M';
+    	this.curr = t;
+    }
+
+    public void incScore(float delta){
+        score += delta;
+    }
+    
+    public void clearObjectiveSMTests() {
+    	this.objective = 0;
+    }
+    
+    public void clearTimerTMTests() {
+    	this.timer = 0f;
     }
 
     public void setMode(char mode){
+
         this.mode = mode;
+        if (mode == 'E') {
+            this.curr = genCube();
+            this.next.clear();
+            this.next.add(genTetromino('N'));
+            this.curr2 = null;
+        }
     }
 
     public void setEnd(char endM){
@@ -50,7 +78,7 @@ public class GameState {
                 break;
             case 'T':
                 this.end = 'T';
-                this.timer = 60f;
+                this.timer = 120f;
                 break;
             default:
                 this.end = 'M';
@@ -108,6 +136,7 @@ public class GameState {
     public Tetromino genTetromino(char power){
         Random randomno = new Random();
         int x = randomno.nextInt(7);
+        if (this.mode == 'E') return genCube();
         switch (x){
             case 0:
                 return (new TetroI(power));
@@ -125,6 +154,14 @@ public class GameState {
                 return (new TetroT(power));
 
         }
+    }
+
+    public Tetromino genCube(){
+        TetroO tetromino = new TetroO('N');
+        tetromino.etmShift(cubeCounter);
+        cubeCounter++;
+        if (cubeCounter > 4) cubeCounter = 0;
+        return tetromino;
     }
 
     public Tetromino genSpecTetromino(char spec){
@@ -213,6 +250,18 @@ public class GameState {
         Collections.sort(placed); //Sort Block List
     }
 
+    public void lock2(){
+        placed.add(curr2.getBlocks().get("A"));
+        placed.add(curr2.getBlocks().get("B"));
+        placed.add(curr2.getBlocks().get("C"));
+        placed.add(curr2.getBlocks().get("D"));
+        curr2 = genTetromino('N');
+        if (this.next.size() == 0) {
+            this.next.add(genTetromino(genPower()));
+        }
+        Collections.sort(placed); //Sort Block List
+    }
+
     public void drop(){
         Coords ac = curr.getBlocks().get("A").getCoords();
         Coords bc = curr.getBlocks().get("B").getCoords();
@@ -231,6 +280,27 @@ public class GameState {
             lines[(int)curr.getBlocks().get("D").getCoords().Y()] += 1;
             lock();
         }
+    }
+
+    public void dropCurr2(){
+        Coords ac = curr2.getBlocks().get("A").getCoords();
+        Coords bc = curr2.getBlocks().get("B").getCoords();
+        Coords cc = curr2.getBlocks().get("C").getCoords();
+        Coords dc = curr2.getBlocks().get("D").getCoords();
+        if (canDrop(ac) && canDrop(bc) && canDrop(cc) && canDrop(dc)) {
+            curr2.getBlocks().get("A").getCoords().setCoords(ac.X() + 0, ac.Y() + 1);
+            curr2.getBlocks().get("B").getCoords().setCoords(bc.X() + 0, bc.Y() + 1);
+            curr2.getBlocks().get("C").getCoords().setCoords(cc.X() + 0, cc.Y() + 1);
+            curr2.getBlocks().get("D").getCoords().setCoords(dc.X() + 0, dc.Y() + 1);
+        } else {
+
+            lines[(int)curr2.getBlocks().get("A").getCoords().Y()] += 1;
+            lines[(int)curr2.getBlocks().get("B").getCoords().Y()] += 1;
+            lines[(int)curr2.getBlocks().get("C").getCoords().Y()] += 1;
+            lines[(int)curr2.getBlocks().get("D").getCoords().Y()] += 1;
+            lock2();
+        }
+
     }
 
     public void setNext5P(char next){
@@ -567,5 +637,15 @@ public class GameState {
 
         incrementScore(pointsAdded);
 
+    }
+    
+    public void setCurr(Tetromino t) {
+    	this.curr = t;
+    }
+
+    public void setCurr2(Tetromino t){ this.curr2 = t;}
+
+    public Tetromino getCurr2(){
+        return this.curr2;
     }
 }

@@ -15,6 +15,17 @@ public class TetroO extends Tetromino {
     }
 
     public void rotate(LinkedList<Block> placed){}
+
+    public void etmShift(int num){
+        Coords a = this.getBlocks().get("A").getCoords();
+        a.setCoords(a.X() + 2*num, a.Y());
+        Coords b = this.getBlocks().get("B").getCoords();
+        b.setCoords(b.X() + 2*num, b.Y());
+        Coords c = this.getBlocks().get("C").getCoords();
+        c.setCoords(c.X() + 2*num, c.Y());
+        Coords d = this.getBlocks().get("D").getCoords();
+        d.setCoords(d.X() + 2*num, d.Y());
+    }
 /*
     public static void main (String [] arg){
         Tetromino t = new TetroO('O');

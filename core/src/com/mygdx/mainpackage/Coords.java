@@ -23,6 +23,11 @@ public class Coords implements Comparable<Coords>{
         this.x = x;
         this.y = y;
     }
+    
+    public Coords(Coords c) {
+    	this.x = c.X();
+    	this.y = c.Y();
+    }
 
     /**
      * Equals

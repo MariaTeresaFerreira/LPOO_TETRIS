@@ -25,6 +25,7 @@ public class MainGameScreen implements Screen{
     protected Texture nextText = new Texture("next.png");
     protected Texture scoreText = new Texture("score.png");
     protected Sprite muteSprite = new Sprite (new Texture("sound.png"));
+    boolean timeDispTetros = false;
 
     Texture darkBlue = new Texture("darkBlueBlock.png");
     Texture lightBlue = new Texture("lightBlueBlock.png");
@@ -78,7 +79,7 @@ public class MainGameScreen implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y){
                 SwapImageClick.mute(t, muteSprite);
-                System.out.println("AAA");
+
             }
         });
         stage.addActor(muteButton);
@@ -91,7 +92,6 @@ public class MainGameScreen implements Screen{
                 displacementY - b.getCoords().Y()*blockSize + blockSize);
         return c;
     }
-
     public boolean validScreenCoordsBlock(Block b){
 
         Coords c = genScreenCoords(b);
@@ -343,45 +343,57 @@ public class MainGameScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        //TODO: FIX TETROMINOES DRAWING OUTSIDE PLAYING FIELD
         time += Gdx.graphics.getDeltaTime();
         t.tToIncreaseSpeed += Gdx.graphics.getDeltaTime();
 
-        if (t.time){
-            t.g.decTimer(Gdx.graphics.getDeltaTime());
-        }
-
-        if (t.sprint){
-            t.g.incTimer(Gdx.graphics.getDeltaTime());
-        }
-
-        if (t.g.effectTimer > 0) {
-            t.g.effectTimer -= Gdx.graphics.getDeltaTime();
-        } else {
-            t.g.effectTimer = 0f;
-            t.g.clearEffect();
-
-        }
-        if (t.g.getActiveEffect() != 'U' && t.g.getActiveEffect() != 'D') {
-            if (time >= t.speed) {
-                t.g.drop();
-                time = 0;
+        if (!t.escapeTheMatrix) {
+            if (t.time) {
+                t.g.decTimer(Gdx.graphics.getDeltaTime());
             }
-        }else if (t.g.getActiveEffect() == 'U') {
-            if (time >= 0.25){
-                t.g.drop();
-                time = 0;
-            }
-        } else if (t.g.getActiveEffect() == 'D'){
-            if (time >= 2){
-                t.g.drop();
-                time = 0;
-            }
-        }
 
-        if(t.tToIncreaseSpeed >= 20){
-            t.tToIncreaseSpeed = new Float(0);
-            if (t.speed > 0.3) t.speed -= (float) 0.1;
+            if (t.sprint) {
+                t.g.incTimer(Gdx.graphics.getDeltaTime());
+            }
+
+            if (t.g.effectTimer > 0) {
+                t.g.effectTimer -= Gdx.graphics.getDeltaTime();
+            } else {
+                t.g.effectTimer = 0f;
+                t.g.clearEffect();
+
+            }
+            if (t.g.getActiveEffect() != 'U' && t.g.getActiveEffect() != 'D') {
+                if (time >= t.speed) {
+                    t.g.drop();
+                    time = 0;
+                }
+            } else if (t.g.getActiveEffect() == 'U') {
+                if (time >= 0.25) {
+                    t.g.drop();
+                    time = 0;
+                }
+            } else if (t.g.getActiveEffect() == 'D') {
+                if (time >= 2) {
+                    t.g.drop();
+                    time = 0;
+                }
+            }
+
+            if (t.tToIncreaseSpeed >= 20) {
+                t.tToIncreaseSpeed = new Float(0);
+                if (t.speed > 0.3) t.speed -= (float) 0.1;
+            }
+        } else{
+            if (time >= t.speed){
+                t.g.drop();
+                if (t.g.getCurr2() != null) t.g.dropCurr2();
+                if(timeDispTetros) time = 0;
+            }
+
+            if (time >= 1){
+                t.g.setCurr2(t.g.genTetromino('N'));
+                timeDispTetros = true;
+            }
         }
 
         t.batch.begin();
@@ -395,7 +407,11 @@ public class MainGameScreen implements Screen{
         drawTetromino(t.g.getCurr());
         drawPlayingField();
         drawPlaced();
-        drawHoldAndNext();
+        if (!t.escapeTheMatrix) {
+            drawHoldAndNext();
+        } else{
+            if (t.g.getCurr2() != null) drawTetromino(t.g.getCurr2());
+        }
         if (t.g.defeat()){
             this.dispose();
             t.setScreen(new GameOverScreen(t));

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.mainpackage.Screens.ETMDScreen;
 import com.mygdx.mainpackage.Screens.MGSDesktop;
 import com.mygdx.mainpackage.Screens.MainMenuScreen;
 
@@ -33,11 +34,20 @@ public class Tetris extends Game {
 	* public static final float SPEED = pixels/segundo que queremos que a imagem ande, assim fica independente da fps
 	* */
 
+	public GameState getGameState(){
+		return g;
+	}
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		g = new GameState();
-		this.setScreen(new MainMenuScreen(this));
+		/*
+		REMOVE AFTER TESTING
+		* */
+		g.setMode('E');
+
+		this.setScreen(new  ETMDScreen(this, 0.4f)/*new MainMenuScreen(this)*/);
 		tToIncreaseSpeed = (float) 0;
 		speed = (float) 1;
 
@@ -56,6 +66,8 @@ public class Tetris extends Game {
 		singlePlayer = false;
 		createMultiplayer = false;
 		joinMultiplayer = false;
+		escapeTheMatrix = true;
+
 	}
 
 	@Override
